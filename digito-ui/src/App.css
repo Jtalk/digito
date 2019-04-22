@@ -1,0 +1,130 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 40vmin;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.ui.right.aligned.search.item {
+  align-self: center;
+}
+
+.header > a {
+  color: black;
+}
+
+.header > a:visited {
+  color: grey;
+}
+
+.main-content-pushable {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content-pusher {
+  flex: 1 0 auto;
+}
+
+footer {
+  border-width: 0 0 0 0 !important;
+  border-image-width: 0 0 0 0 !important;
+  bottom: 0;
+  margin: 0;
+  flex-shrink: 0;
+}
+
+footer a {
+  color: white;
+}
+
+.ui.container.framed {
+  border-left-style: solid;
+  border-right-style: solid;
+  border-left-width: 2px;
+  border-right-width: 2px;
+  border-color: lightgray;
+  background-color: white;
+}
+
+.centred {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+@media only screen {
+  .digit.draw {
+    height: 90vw;
+    width: 90vw;
+  }
+  .centred.drawing {
+    height: 91vw;
+    width: 91vw;
+  }
+  .drawing-column {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media only screen and (min-width: 308px) and (max-width: 1000px) {
+  .digit.draw {
+    height: 300px;
+    width: 300px;
+  }
+  .centred.drawing {
+    height: 300px;
+    width: 300px;
+    padding: 0 0 0 0;
+  }
+  .drawing-column {
+    width: 307px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media only screen and (min-width: 1001px) {
+  .digit.draw {
+    height: 300px;
+    width: 300px;
+  }
+  .centred.drawing {
+    height: 300px;
+    width: 300px;
+    padding: 0 0 0 0;
+  }
+  .drawing-column {
+    width: 307px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
