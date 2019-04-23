@@ -18,9 +18,9 @@ pipelines:
     - step:
         name: api-deploy
         deployment: production
+        image: kramos/alpine-zip:0.1.0
         script:
         - cd digito-api
-        - apt install zip
         - zip -r digito-api.zip . -x tests
         - pipe: atlassian/aws-elasticbeanstalk-deploy:0.2.9
           variables:
