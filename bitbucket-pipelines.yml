@@ -11,7 +11,7 @@ pipelines:
         name: ui-test
         image: node:11.14.0
         caches:
-        - node_modules: digito-ui/node_modules
+        - digito-ui/node_modules
         script:
         - cd digito-ui
         - npm install
@@ -28,7 +28,7 @@ pipelines:
         deployment: production
         image: kramos/alpine-zip:latest
         caches:
-        - node_modules: digito-ui/node_modules
+        - digito-ui/node_modules
         script:
         - cd digito-ui
         - zip -r digito-ui.zip . -x **.test.js
