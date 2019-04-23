@@ -6,8 +6,10 @@ from dlnetwork import DLNetwork, train_mnist
 from image import convert_colour
 from image_binary import from_binary
 
-_MODEL_YAML_NAME = 'net/model.yml'
-_WEIGHTS_NAME = 'net/weights.h5'
+_LOCATION = os.path.dirname(os.path.abspath(__file__))
+
+_MODEL_YAML_NAME = os.path.join(_LOCATION, 'net', 'model.yml')
+_WEIGHTS_NAME = os.path.join(_LOCATION, 'net', 'weights.h5')
 
 _DLNETWORK_CACHE = None
 _VERBOSE = int(os.environ['VERBOSE'] if 'VERBOSE' in os.environ else 0) > 0
