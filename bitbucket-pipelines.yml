@@ -18,7 +18,7 @@ pipelines:
     - step:
         name: api-deploy
         deployment: production
-        image: kramos/alpine-zip:0.1.0
+        image: kramos/alpine-zip:latest
         script:
         - cd digito-api
         - zip -r digito-api.zip . -x tests
