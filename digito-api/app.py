@@ -29,3 +29,7 @@ def recognise():
 def prepare():
     recognition.prepare()
     print('The model is successfully trained')
+
+
+# WSGI
+application = app
