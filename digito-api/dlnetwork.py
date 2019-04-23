@@ -25,7 +25,7 @@ class DLNetwork():
 
     The training routines provided train the network on the MNIST data set.
 
-    For trivia behind coefficients and training parameters see 'Classify MNIST' documents in the root of the project.
+    For trivia behind coefficients and training parameters see 'README' in the root of the project.
     """
     _model: Sequential
 
