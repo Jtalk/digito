@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './utils/config';
 import * as request from 'superagent';
-import {Button, Container, Grid, Header, Menu, Segment} from "semantic-ui-react";
+import {Button, Container, Grid, Header, Segment} from "semantic-ui-react";
 import FooterLoader from "./footer/footer-loader";
 import CanvasDraw from "./canvas-draw/canvas-draw";
 import api from "./utils/superagent-api";
@@ -10,6 +10,7 @@ import AlertTemplate from 'react-alert-template-basic';
 import {toBlob} from "./utils/image";
 import {apiDelay} from "./utils/test-api-delay";
 import './App.css';
+import MenuBar from "./menu/menu";
 
 class App extends Component {
 
@@ -21,11 +22,7 @@ class App extends Component {
     render() {
         return <AlertProvider template={AlertTemplate} position={positions.TOP_CENTER} timeout={10000}>
             <div className="main-content-pushable">
-                <Menu inverted widths={3} size={'large'}>
-                    <Menu.Item>About</Menu.Item>
-                    <Menu.Item><a href={'https://bitbucket.org/__jtalk/digito'}>Source</a></Menu.Item>
-                    <Menu.Item><a href={'https://jtalk.me'}>Author</a></Menu.Item>
-                </Menu>
+                <MenuBar/>
                 <Container className="main-content-pusher">
                     <div className={'drawing-column'}>
                         <Header as={'h2'}>Draw a digit below</Header>
