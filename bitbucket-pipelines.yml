@@ -27,4 +27,5 @@ pipelines:
             APPLICATION_NAME: 'digito'
             ENVIRONMENT_NAME: 'api-prod'
             ZIP_FILE: 'digito-api.zip'
+            S3_BUCKET: 'elasticbeanstalk-eu-west-2-858907644507'
 
