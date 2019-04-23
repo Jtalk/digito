@@ -1,3 +1,4 @@
+import os
 from unittest import TestCase
 
 import cv2
@@ -5,6 +6,8 @@ from numpy import array
 
 import image
 from image_binary import from_binary
+
+_LOCATION = os.path.dirname(os.path.abspath(__file__))
 
 
 class ImageTest_threshold_binarise(TestCase):
@@ -438,9 +441,9 @@ class TestImage_pad(TestCase):
 
 class TestImage_convert_colour(TestCase):
     def test_grayscale_transparency(self):
-        with open('resources/image-transparent.png', 'rb') as src:
+        with open(os.path.join(_LOCATION, 'resources', 'image-transparent.png'), 'rb') as src:
             img = from_binary(src.read())
             result = image.convert_colour(img, transparency_colour=255, colour=cv2.COLOR_BGRA2GRAY)
-            with open('resources/image-grayscale.png', 'rb') as exp:
+            with open(os.path.join(_LOCATION, 'resources', 'image-grayscale.png'), 'rb') as exp:
                 expected = from_binary(exp.read())
                 self.assertEqual(expected.tolist(), result.tolist())
