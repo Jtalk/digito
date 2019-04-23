@@ -8,6 +8,7 @@ image: python:3.7.2
 pipelines:
   default:
     - step:
+        name: api-test
         caches:
           - pip
         script:
@@ -15,9 +16,11 @@ pipelines:
           - pip install -r requirements.txt
           - python -m nose2
     - step:
-        name: deploy-api
+        name: api-deploy
+        deployment: production
         script:
         - cd digito-api
+        - apt install zip
         - zip -r digito-api.zip . -x tests
         - pipe: atlassian/aws-elasticbeanstalk-deploy:0.2.9
           variables:
