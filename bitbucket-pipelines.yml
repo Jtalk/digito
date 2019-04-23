@@ -3,12 +3,13 @@
 # Only use spaces to indent your .yml configuration.
 # -----
 # You can specify a custom docker image from Docker Hub as your build environment.
-image: python:3.7.2
+
 
 pipelines:
   default:
     - step:
         name: api-test
+        image: python:3.7.2
         caches:
           - pip
         script:
@@ -31,4 +32,10 @@ pipelines:
             ENVIRONMENT_NAME: 'api-prod'
             ZIP_FILE: 'digito-api.zip'
             S3_BUCKET: 'elasticbeanstalk-eu-west-2-858907644507'
-
+    - step:
+        name: ui-test
+        image: node:10.15.0
+        script:
+        - cd digito-ui
+        - npm install
+        - npm test
