@@ -28,9 +28,6 @@ pipelines:
             - cd digito-ui
             - npm install
             - npm test src
-            - npm run build
-            artifacts:
-            - digito-ui/build/**
     - step:
         name: deploy
         deployment: production
