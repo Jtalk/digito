@@ -43,7 +43,7 @@ pipelines:
             ENVIRONMENT_NAME: 'ui-prod'
             ZIP_FILE: 'digito-ui.zip'
             S3_BUCKET: 'elasticbeanstalk-eu-west-2-858907644507' 
-            VERSION_LABEL: '${APPLICATION_NAME}-ui-${BITBUCKET_BUILD_NUMBER}-${BITBUCKET_COMMIT:0:8}'
+            VERSION_LABEL: 'digito-ui-${BITBUCKET_BUILD_NUMBER}-${BITBUCKET_COMMIT:0:8}'
         - cd ../digito-api
         - zip -r digito-api.zip . -x tests
         - pipe: atlassian/aws-elasticbeanstalk-deploy:0.2.9
@@ -55,5 +55,5 @@ pipelines:
             ENVIRONMENT_NAME: 'api-prod'
             ZIP_FILE: 'digito-api.zip'
             S3_BUCKET: 'elasticbeanstalk-eu-west-2-858907644507' 
-            VERSION_LABEL: '${APPLICATION_NAME}-api-${BITBUCKET_BUILD_NUMBER}-${BITBUCKET_COMMIT:0:8}'
+            VERSION_LABEL: 'digito-api-${BITBUCKET_BUILD_NUMBER}-${BITBUCKET_COMMIT:0:8}'
 
