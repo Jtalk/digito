@@ -19,6 +19,9 @@ pipelines:
         - cd digito-ui
         - npm install
         - npm test src
+        artifacts:
+        - digito-ui/node_modules/**
+
     - step:
         name: api-test
         image: python:3.7.2
@@ -36,6 +39,8 @@ pipelines:
         - cd digito-ui
         - npm install
         - npm run build
+        artifacts:
+        - digito-ui/build/**
     - step:
         name: deploy
         deployment: production
