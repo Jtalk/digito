@@ -25,6 +25,8 @@ pipelines:
     - step:
         name: api-test
         image: python:3.7.2
+        caches:
+        - pip
         script:
           - cd digito-api
           - pip install -r requirements.txt
