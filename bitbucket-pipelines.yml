@@ -7,6 +7,7 @@
 definitions:
   caches:
     node-modules: digito-ui/node_modules
+    node-build: digito-ui/build
 pipelines:
   default:
     - step:
@@ -26,11 +27,22 @@ pipelines:
           - pip install -r requirements.txt
           - python -m nose2
     - step:
+        name: ui-build
+        image: node:11.14.0
+        caches:
+        - node-modules
+        - node-build
+        script:
+        - cd digito-ui
+        - npm install
+        - npm run build
+    - step:
         name: deploy
         deployment: production
         image: kramos/alpine-zip:latest
         caches:
         - node-modules
+        - node-build
         script:
         - cd digito-ui
         - zip -r digito-ui.zip . -x **.test.js
