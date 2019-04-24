@@ -28,33 +28,35 @@ pipelines:
             - cd digito-ui
             - npm install
             - npm test src
-    - step:
-        name: deploy
-        deployment: production
-        image: kramos/alpine-zip:latest
-        script:
-        - cd digito-ui
-        - zip -r digito-ui.zip . -x **.test.js
-        - pipe: atlassian/aws-elasticbeanstalk-deploy:0.2.9
-          variables:
-            AWS_ACCESS_KEY_ID: 'AKIA4P6XCSJNYSD2H2RA'
-            AWS_SECRET_ACCESS_KEY: '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'
-            AWS_DEFAULT_REGION: 'eu-west-2'
-            APPLICATION_NAME: 'digito'
-            ENVIRONMENT_NAME: 'ui-prod'
-            ZIP_FILE: 'digito-ui.zip'
-            S3_BUCKET: 'elasticbeanstalk-eu-west-2-858907644507' 
-            VERSION_LABEL: 'digito-ui-${BITBUCKET_BUILD_NUMBER}-${BITBUCKET_COMMIT:0:8}'
-        - cd ../digito-api
-        - zip -r digito-api.zip . -x tests
-        - pipe: atlassian/aws-elasticbeanstalk-deploy:0.2.9
-          variables:
-            AWS_ACCESS_KEY_ID: 'AKIA4P6XCSJNYSD2H2RA'
-            AWS_SECRET_ACCESS_KEY: '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'
-            AWS_DEFAULT_REGION: 'eu-west-2'
-            APPLICATION_NAME: 'digito'
-            ENVIRONMENT_NAME: 'api-prod'
-            ZIP_FILE: 'digito-api.zip'
-            S3_BUCKET: 'elasticbeanstalk-eu-west-2-858907644507' 
-            VERSION_LABEL: 'digito-api-${BITBUCKET_BUILD_NUMBER}-${BITBUCKET_COMMIT:0:8}'
+  branches:
+    master:
+        - step:
+            name: deploy
+            deployment: production
+            image: kramos/alpine-zip:latest
+            script:
+            - cd digito-ui
+            - zip -r digito-ui.zip . -x **.test.js
+            - pipe: atlassian/aws-elasticbeanstalk-deploy:0.2.9
+              variables:
+                AWS_ACCESS_KEY_ID: 'AKIA4P6XCSJNYSD2H2RA'
+                AWS_SECRET_ACCESS_KEY: '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'
+                AWS_DEFAULT_REGION: 'eu-west-2'
+                APPLICATION_NAME: 'digito'
+                ENVIRONMENT_NAME: 'ui-prod'
+                ZIP_FILE: 'digito-ui.zip'
+                S3_BUCKET: 'elasticbeanstalk-eu-west-2-858907644507' 
+                VERSION_LABEL: 'digito-ui-${BITBUCKET_BUILD_NUMBER}-${BITBUCKET_COMMIT:0:8}'
+            - cd ../digito-api
+            - zip -r digito-api.zip . -x tests
+            - pipe: atlassian/aws-elasticbeanstalk-deploy:0.2.9
+              variables:
+                AWS_ACCESS_KEY_ID: 'AKIA4P6XCSJNYSD2H2RA'
+                AWS_SECRET_ACCESS_KEY: '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'
+                AWS_DEFAULT_REGION: 'eu-west-2'
+                APPLICATION_NAME: 'digito'
+                ENVIRONMENT_NAME: 'api-prod'
+                ZIP_FILE: 'digito-api.zip'
+                S3_BUCKET: 'elasticbeanstalk-eu-west-2-858907644507' 
+                VERSION_LABEL: 'digito-api-${BITBUCKET_BUILD_NUMBER}-${BITBUCKET_COMMIT:0:8}'
 
