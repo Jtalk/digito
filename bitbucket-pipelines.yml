@@ -4,14 +4,16 @@
 # -----
 # You can specify a custom docker image from Docker Hub as your build environment.
 
-
+definitions:
+  caches:
+    node-modules: digito-ui/node_modules
 pipelines:
   default:
     - step:
         name: ui-test
         image: node:11.14.0
         caches:
-        - digito-ui/node_modules
+        - node-modules
         script:
         - cd digito-ui
         - npm install
@@ -28,7 +30,7 @@ pipelines:
         deployment: production
         image: kramos/alpine-zip:latest
         caches:
-        - digito-ui/node_modules
+        - node-modules
         script:
         - cd digito-ui
         - zip -r digito-ui.zip . -x **.test.js
@@ -41,12 +43,7 @@ pipelines:
             ENVIRONMENT_NAME: 'ui-prod'
             ZIP_FILE: 'digito-ui.zip'
             S3_BUCKET: 'elasticbeanstalk-eu-west-2-858907644507'
-    - step:
-        name: api-deploy
-        deployment: production
-        image: kramos/alpine-zip:latest
-        script:
-        - cd digito-api
+        - cd ../digito-api
         - zip -r digito-api.zip . -x tests
         - pipe: atlassian/aws-elasticbeanstalk-deploy:0.2.9
           variables:
