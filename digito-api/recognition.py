@@ -20,6 +20,7 @@ def recognise(img):
     img = convert_colour(img, transparency_colour=255, colour=cv2.COLOR_BGRA2GRAY)
     img = _adjust_dimensions(img)
     net = _get_network()
+    print('Recognising the image')
     return next(iter(net.recognise(img, verbose=_VERBOSE)))
 
 
@@ -30,9 +31,14 @@ def prepare():
 
 
 def _get_network():
+    print('Getting a network instance')
     global _DLNETWORK_CACHE
     if _DLNETWORK_CACHE is None:
+        print('No pre-cached network found, loading a new one')
         _DLNETWORK_CACHE = DLNetwork(_MODEL_YAML_NAME, _WEIGHTS_NAME)
+        print('The network was successfully loaded')
+    else:
+        print('Returning a pre-cached instance of the network')
     return _DLNETWORK_CACHE
 
 

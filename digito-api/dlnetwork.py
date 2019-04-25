@@ -37,10 +37,13 @@ class DLNetwork():
         :param weights_file_name: a weights file name. This parameter is only respected if the model file was also provided.
         """
         if model_yaml_file_name is None:
+            print('No .yml file were provided, creating an untrained network')
             self._model = DLNetwork._create()
         else:
+            print('Loading the existing network from model "%s"' % model_yaml_file_name)
             self._model = DLNetwork._load_model(model_yaml_file_name)
             if weights_file_name is not None:
+                print('Loading the existing weights from "%s"' % weights_file_name)
                 self._model.load_weights(weights_file_name)
 
     def save(self, model_yaml_file_name, weights_file_name):
@@ -71,7 +74,9 @@ class DLNetwork():
         assert image_array.shape[3] == 1, \
             'The images were expected to be grayscale, but had %d channels' % image_array.shape[3]
         preprocessed = _preprocess_images(image_array, verbose=verbose)
+        print('Image preprocessing complete')
         results = self._model.predict(preprocessed, verbose=verbose).tolist()
+        print('Prediction is done, interpreting the output')
         digits = []
         for result in results:
             digit = result.index(max(result))
