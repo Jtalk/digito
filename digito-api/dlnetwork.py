@@ -1,11 +1,13 @@
 import cv2
-import keras
 import numpy
+print('Loading Keras')
+import keras
 from keras import Sequential
 from keras.datasets import mnist
 from keras.engine.saving import model_from_yaml
 from keras.layers import Conv2D, BatchNormalization, Activation, MaxPool2D, Flatten, Dense, Dropout
 from keras.utils import to_categorical
+print('Keras is ready')
 from numpy import array
 from tqdm import tqdm
 
