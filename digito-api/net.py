@@ -21,6 +21,7 @@ _VERBOSE_IMAGE_SAVE_LIMIT = 10
 
 log = logging.getLogger('net')
 
+
 class Net():
     """
     Represents a CNN network to recognise hand-written digits.

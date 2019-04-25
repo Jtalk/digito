@@ -5,8 +5,11 @@ from flask import Flask, request, redirect
 from flask_cors import CORS, cross_origin
 
 import recognition
+import logconf
 
 UI_LOCATION = os.environ['UI_LOCATION'].split(',')
+
+logconf.init_logs()
 
 app = Flask(__name__)
 cors = CORS(app)
