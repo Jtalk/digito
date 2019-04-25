@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './utils/config';
 import * as request from 'superagent';
-import {Button, Container, Grid, Header, Segment} from "semantic-ui-react";
+import {Button, Grid, Header, Segment} from "semantic-ui-react";
 import FooterLoader from "./footer/footer-loader";
 import CanvasDraw from "./canvas-draw/canvas-draw";
 import api from "./utils/superagent-api";
@@ -25,7 +25,7 @@ class App extends Component {
         return <AlertProvider template={AlertTemplate} position={positions.TOP_CENTER} timeout={10000}>
             <div className="main-content-pushable">
                 <MenuBar/>
-                <Container className="main-content-pusher">
+                <div className="main-content-pusher">
                     <div className={'drawing-column'}>
                         <Header as={'h2'}>Draw a digit below</Header>
                         <Segment compact textAlign={'center'} className={'centred drawing'} size={'large'}>
@@ -52,7 +52,7 @@ class App extends Component {
                             </Grid>
                         </Segment>
                     </div>
-                </Container>
+                </div>
                 <FooterLoader/>
             </div>
         </AlertProvider>
