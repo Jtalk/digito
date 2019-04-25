@@ -8,8 +8,7 @@ definitions:
   caches:
     node-modules: digito-ui/node_modules
 common:
-    - &apiBuildStep 
-      step:
+    - step: &apiBuildStep
         name: api-build
         image: python:3.7.2
         caches:
@@ -18,8 +17,7 @@ common:
           - cd digito-api
           - pip install -r requirements.txt
           - python -m nose2
-    - &uiBuildStep
-      step:
+    - step: &uiBuildStep
         name: ui-build
         image: node:11.14.0
         caches:
@@ -31,12 +29,17 @@ common:
 pipelines:
   default:
     - parallel:
-       - *apiBuildStep
-       - *uiBuildStep
+       - step: 
+         <<: *apiBuildStep
+       - step:
+         <<: *uiBuildStep
   branches:
     master:
-        - *apiBuildStep
-        - *uiBuildStep
+        - parallel:
+           - step: 
+             <<: *apiBuildStep
+           - step:
+             <<: *uiBuildStep
         - step:
             name: deploy
             deployment: production
