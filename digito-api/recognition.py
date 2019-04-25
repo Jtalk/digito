@@ -3,7 +3,7 @@ import os
 
 import cv2
 
-from dlnetwork import DLNetwork, train_mnist
+from net import Net, train_mnist
 from image import convert_colour, from_binary
 
 _LOCATION = os.path.dirname(os.path.abspath(__file__))
@@ -29,7 +29,7 @@ def recognise(img):
 
 
 def prepare():
-    net = DLNetwork()
+    net = Net()
     net = train_mnist(net)
     net.save(_MODEL_YAML_NAME, _WEIGHTS_NAME)
 
@@ -39,7 +39,7 @@ def _get_network():
     global _DLNETWORK_CACHE
     if _DLNETWORK_CACHE is None:
         log.info('No pre-cached network found, loading a new one')
-        _DLNETWORK_CACHE = DLNetwork(_MODEL_YAML_NAME, _WEIGHTS_NAME)
+        _DLNETWORK_CACHE = Net(_MODEL_YAML_NAME, _WEIGHTS_NAME)
         log.info('The network was successfully loaded')
     else:
         log.debug('Returning a pre-cached instance of the network')

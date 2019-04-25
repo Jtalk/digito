@@ -21,7 +21,7 @@ _VERBOSE_IMAGE_SAVE_LIMIT = 10
 
 log = logging.getLogger('net')
 
-class DLNetwork():
+class Net():
     """
     Represents a CNN network to recognise hand-written digits.
 
@@ -40,10 +40,10 @@ class DLNetwork():
         """
         if model_yaml_file_name is None:
             log.info('No .yml file were provided, creating an untrained network')
-            self._model = DLNetwork._create()
+            self._model = Net._create()
         else:
             log.info('Loading the existing network from model "%s"' % model_yaml_file_name)
-            self._model = DLNetwork._load_model(model_yaml_file_name)
+            self._model = Net._load_model(model_yaml_file_name)
             if weights_file_name is not None:
                 log.info('Loading the existing weights from "%s"' % weights_file_name)
                 self._model.load_weights(weights_file_name)
@@ -119,7 +119,7 @@ class DLNetwork():
             return model_from_yaml(yaml)
 
 
-def train_mnist(net: DLNetwork):
+def train_mnist(net: Net):
     x_train, y_train, x_test, y_test = _load_mnist()
     net.train(x_train, y_train, x_test, y_test)
     return net
