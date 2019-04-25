@@ -4,6 +4,17 @@ from numpy import array, rint, add
 from skimage.filters import threshold_otsu
 
 
+def from_binary(image_bytes):
+    """
+    Turn raw image bytes into an image tensor (incl. to-bitmap conversion if necessary).
+    :param image_bytes: A raw byte array of the image file (e.g. .png, .jpg)
+    :return: A [width, height, channels] bitmap tensor of the image.
+    """
+    npImage = numpy.fromstring(image_bytes, numpy.uint8)
+    img = cv2.imdecode(npImage, cv2.IMREAD_UNCHANGED)
+    return img
+
+
 def threshold_binarise(image_array, threshold=None):
     """
     Performs a threshold binarisation of the source image.

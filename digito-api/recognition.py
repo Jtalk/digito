@@ -4,8 +4,7 @@ import os
 import cv2
 
 from dlnetwork import DLNetwork, train_mnist
-from image import convert_colour
-from image_binary import from_binary
+from image import convert_colour, from_binary
 
 _LOCATION = os.path.dirname(os.path.abspath(__file__))
 
@@ -16,6 +15,7 @@ _DLNETWORK_CACHE = None
 _VERBOSE = int(os.environ['VERBOSE'] if 'VERBOSE' in os.environ else 0) > 0
 
 log = logging.getLogger('recognition')
+
 
 def recognise(img):
     img = from_binary(img)
