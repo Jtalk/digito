@@ -5,7 +5,6 @@ import Adapter from 'enzyme-adapter-react-16';
 
 import Footer from "./footer";
 import FlatLinksList from "./flat-links-list";
-import FlatLogoList from "./flat-logo-list";
 import {Container, Segment} from "semantic-ui-react";
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -39,7 +38,6 @@ describe("<Footer/>", () => {
   it('forwards links and logos to proper children', () => {
     let result = shallow(<Footer links={links} logos={logos}/>);
     expect(result.find(FlatLinksList).props()).toMatchObject({links: links});
-    expect(result.find(FlatLogoList).props()).toMatchObject({logos: logos});
   });
   it('renders centrally aligned', () => {
     let result = shallow(<Footer links={links} logos={logos}/>);
