@@ -1,7 +1,6 @@
 import React from "react";
 import {Container, Segment} from "semantic-ui-react";
 import FlatLinksList from "./flat-links-list";
-import FlatLogoList from "./flat-logo-list";
 
 export default class Footer extends React.Component {
 
@@ -11,7 +10,9 @@ export default class Footer extends React.Component {
                 <Segment inverted basic textAlign="center">
                     <FlatLinksList links={this.props.links} separator="|"/>
                 </Segment>
-                <FlatLogoList logos={this.props.logos}/>
+                <Segment inverted basic textAlign={'center'}>
+                    Copyright 2019 Roman Nazarenko
+                </Segment>
             </Container>
         </Segment>
     }
