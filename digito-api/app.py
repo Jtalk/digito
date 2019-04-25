@@ -5,7 +5,7 @@ from flask_cors import CORS, cross_origin
 
 import recognition
 
-UI_LOCATION = os.environ['UI_ADDRESS']
+UI_LOCATION = os.environ['UI_LOCATION'].split(',')
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -13,7 +13,7 @@ cors = CORS(app)
 
 @app.route('/')
 def index():
-    return redirect(UI_LOCATION)
+    return redirect(UI_LOCATION[0])
 
 
 @app.route('/recognise', methods=['POST'])
