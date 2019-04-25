@@ -3,7 +3,7 @@ import {Container, Segment} from "semantic-ui-react";
 import FlatLinksList from "./flat-links-list";
 import {withErrorBoundary} from "react-error-boundary";
 
-class Footer extends React.Component {
+export class FooterImpl extends React.Component {
 
     render() {
         return <Segment inverted basic className="footer" as="footer" textAlign="center">
@@ -19,4 +19,4 @@ class Footer extends React.Component {
     }
 }
 
-export default withErrorBoundary(Footer, null);
+export default withErrorBoundary(FooterImpl, null);
