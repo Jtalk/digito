@@ -75,6 +75,7 @@ class DLNetwork():
         """
         assert image_array.shape[3] == 1, \
             'The images were expected to be grayscale, but had %d channels' % image_array.shape[3]
+        print('Preprocessing images before feeding them to the network')
         preprocessed = _preprocess_images(image_array, verbose=verbose)
         print('Image preprocessing complete')
         results = self._model.predict(preprocessed, verbose=verbose).tolist()

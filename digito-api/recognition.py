@@ -17,7 +17,9 @@ _VERBOSE = int(os.environ['VERBOSE'] if 'VERBOSE' in os.environ else 0) > 0
 
 def recognise(img):
     img = from_binary(img)
+    print('Converting to a grayscale image')
     img = convert_colour(img, transparency_colour=255, colour=cv2.COLOR_BGRA2GRAY)
+    print('Adjusting dimensions for Keras')
     img = _adjust_dimensions(img)
     net = _get_network()
     print('Recognising the image')

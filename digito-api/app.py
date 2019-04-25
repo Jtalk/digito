@@ -19,8 +19,10 @@ def index():
 @app.route('/recognise', methods=['POST'])
 @cross_origin(origins=UI_LOCATION)
 def recognise():
+    print('Image recognition request was received')
     img_raw = request.files['image']
     img_binary = img_raw.read()
+    print('Successfully retrieved the file, recognising')
     digit = recognition.recognise(img_binary)
     return str(digit)
 
