@@ -8,8 +8,8 @@ from image import convert_colour, from_binary
 
 _LOCATION = os.path.dirname(os.path.abspath(__file__))
 
-_MODEL_YAML_NAME = os.path.join(_LOCATION, 'net', 'model.yml')
-_WEIGHTS_NAME = os.path.join(_LOCATION, 'net', 'weights.h5')
+_MODEL_YAML_NAME = os.path.join(_LOCATION, 'model', 'model.yml')
+_WEIGHTS_NAME = os.path.join(_LOCATION, 'model', 'weights.h5')
 
 _DLNETWORK_CACHE = None
 _VERBOSE = int(os.environ['VERBOSE'] if 'VERBOSE' in os.environ else 0) > 0
