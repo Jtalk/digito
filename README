@@ -1,8 +1,8 @@
 Copyright 2019 Roman Nazarenko <me@jtalk.me>
 
-Digito is licensed under GNU Affero General Public License version 3,
+Digito is licenced under GNU Affero General Public Licence version 3,
 except the following parts:
-- React Canvas Draw: MIT-licensed, https://github.com/embiem/react-canvas-draw
+- React Canvas Draw: MIT licence, https://github.com/embiem/react-canvas-draw
 
 Digito is a Keras-powered digit recognition backend with a single-page React UI. 
 
