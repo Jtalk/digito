@@ -68,7 +68,7 @@ class App extends Component {
     }
 
     async submitImage() {
-        this.setState({loading: true});
+        this.setState({digit: undefined, loading: true});
         let imgsrc = this.canvas.toDataURL('image/bmp');
         let blob = toBlob(imgsrc);
         let result = await this._recogniseImage(blob);
