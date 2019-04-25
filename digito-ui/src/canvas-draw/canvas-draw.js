@@ -111,6 +111,7 @@ export default class CanvasDraw extends PureComponent {
         );
         this.canvasObserver.observe(this.canvasContainer);
 
+        this.disableCanvasTouchScroll();
         this.drawImage();
         this.loop();
 
@@ -155,6 +156,7 @@ export default class CanvasDraw extends PureComponent {
 
     componentWillUnmount = () => {
         this.canvasObserver.unobserve(this.canvasContainer);
+        this.restoreCanvasTouchScroll();
     };
 
     drawImage = () => {
@@ -569,5 +571,27 @@ export default class CanvasDraw extends PureComponent {
                 })}
             </div>
         );
+    }
+
+    disableCanvasTouchScroll = () => {
+        // passive: false makes it work on iOS > 11.3 (passive by default there).
+        document.body.addEventListener('touchstart', this.skipScroll, { passive: false });
+        document.body.addEventListener('touchend', this.skipScroll, { passive: false });
+        document.body.addEventListener('touchmove', this.skipScroll, { passive: false });
+        document.body.addEventListener('touchcancel', this.skipScroll, { passive: false });
+    };
+
+    restoreCanvasTouchScroll = () => {
+        document.body.removeEventListener('touchstart', this.skipScroll);
+        document.body.removeEventListener('touchend', this.skipScroll);
+        document.body.removeEventListener('touchmove', this.skipScroll);
+        document.body.removeEventListener('touchcancel', this.skipScroll);
+    };
+
+    skipScroll = e => {
+        let isKnownCanvas = Object.values(this.canvas).includes(e.target);
+        if (isKnownCanvas) {
+            e.preventDefault();
+        }
     }
 }
