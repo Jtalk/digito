@@ -79,6 +79,15 @@ footer a {
   margin-right: auto !important;
 }
 
+.screen-centred {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 95vh;
+  text-align: center;
+  align-items: center;
+}
+
 @media only screen {
   .digit.draw {
     height: 90vw;

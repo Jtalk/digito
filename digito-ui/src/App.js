@@ -11,6 +11,8 @@ import {toBlob} from "./utils/image";
 import {apiDelay} from "./utils/test-api-delay";
 import './App.css';
 import MenuBar from "./menu/menu";
+import {withErrorBoundary} from "react-error-boundary";
+import ErrorPage from "./error/error-page";
 
 class App extends Component {
 
@@ -57,8 +59,12 @@ class App extends Component {
     }
 
     clear() {
-        this.canvas.clear();
-        this.setState({digit: undefined, loading: this.state.loading});
+        try {
+            this.canvas.clear();
+            this.setState({digit: undefined, loading: this.state.loading});
+        } catch (e) {
+            console.error('Error while clearing the canvas', e);
+        }
     }
 
     async submitImage() {
@@ -86,4 +92,4 @@ class App extends Component {
 
 }
 
-export default withAlert()(App)
+export default withErrorBoundary(withAlert()(App), ErrorPage)
