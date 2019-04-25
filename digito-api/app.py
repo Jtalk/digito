@@ -1,4 +1,5 @@
 import os
+import logging
 
 from flask import Flask, request, redirect
 from flask_cors import CORS, cross_origin
@@ -9,7 +10,7 @@ UI_LOCATION = os.environ['UI_LOCATION'].split(',')
 
 app = Flask(__name__)
 cors = CORS(app)
-
+log = logging.getLogger('app')
 
 @app.route('/')
 def index():
@@ -19,10 +20,10 @@ def index():
 @app.route('/recognise', methods=['POST'])
 @cross_origin(origins=UI_LOCATION)
 def recognise():
-    print('Image recognition request was received')
+    log.info('Image recognition request was received')
     img_raw = request.files['image']
     img_binary = img_raw.read()
-    print('Successfully retrieved the file, recognising')
+    log.debug('Successfully retrieved the file, recognising')
     digit = recognition.recognise(img_binary)
     return str(digit)
 
@@ -30,7 +31,7 @@ def recognise():
 @app.cli.command()
 def prepare():
     recognition.prepare()
-    print('The model is successfully trained')
+    log.info('The model is successfully trained')
 
 
 # WSGI
