@@ -63,7 +63,7 @@ pipelines:
                 AWS_SECRET_ACCESS_KEY: '$AWS_SECRET_KEY'
                 AWS_DEFAULT_REGION: 'eu-west-2'
                 APPLICATION_NAME: 'digito'
-                ENVIRONMENT_NAME: 'api-prod'
+                ENVIRONMENT_NAME: 'api-prod5'
                 ZIP_FILE: 'digito-api.zip'
                 S3_BUCKET: 'elasticbeanstalk-eu-west-2-858907644507' 
                 VERSION_LABEL: 'digito-api-${BITBUCKET_BUILD_NUMBER}-${BITBUCKET_COMMIT:0:8}'
