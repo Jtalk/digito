@@ -33,6 +33,11 @@ def recognise():
     return str(digit)
 
 
+@app.route('/health')
+def health():
+    return 'OK'
+
+
 @app.cli.command()
 def prepare():
     recognition.prepare()
