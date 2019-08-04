@@ -81,23 +81,20 @@ pipelines:
         - parallel:
           - *apiDockerPushStep
           - *uiDockerPushStep
-        - step:
-            name: deploy
-            deployment: production
-            script:
-              - echo "Exporting tag from " `pwd`/docker-tag.txt
-              - export VERSION_TAG=`cat docker-tag.txt`
-              - ssh root@digito.jtalk.me -c "docker stop digito-ui; docker run -d --rm --name digito-ui -p 80:80 -e REACT_APP_API_LOCATION=http://digito.jtalk.me -e NODE_ENV=production jtalk:digito-ui:$VERSION_TAG"
-  #          - cd ../digito-api
-  #          - zip -r digito-api.zip . -x tests
-  #          - pipe: atlassian/aws-elasticbeanstalk-deploy:0.2.9
-  #            variables:
-  #              AWS_ACCESS_KEY_ID: '$AWS_ACCESS_KEY'
-  #              AWS_SECRET_ACCESS_KEY: '$AWS_SECRET_KEY'
-  #              AWS_DEFAULT_REGION: 'eu-west-2'
-  #              APPLICATION_NAME: 'digito'
-  #              ENVIRONMENT_NAME: 'api-prod5'
-  #              ZIP_FILE: 'digito-api.zip'
-  #              S3_BUCKET: 'elasticbeanstalk-eu-west-2-858907644507' 
-  #              VERSION_LABEL: 'digito-api-${BITBUCKET_BUILD_NUMBER}-${BITBUCKET_COMMIT:0:8}'
+        - parallel:
+          - step:
+             name: deploy-api
+             deployment: production
+             script:
+               - echo "Exporting tag from " `pwd`/docker-tag.txt
+               - export VERSION_TAG=`cat docker-tag.txt`
+               - ssh root@digito.jtalk.me "docker stop digito-api; docker run -d --rm --name digito-api -p 8080:80 -e UI_LOCATION=http://digito.jtalk.me jtalk:digito-api:$VERSION_TAG"
+          - step:
+              name: deploy-ui
+              deployment: production
+              script:
+                - echo "Exporting tag from " `pwd`/docker-tag.txt
+                - export VERSION_TAG=`cat docker-tag.txt`
+                - ssh root@digito.jtalk.me "docker stop digito-ui; docker run -d --rm --name digito-ui -p 80:80 -e REACT_APP_API_LOCATION=http://digito.jtalk.me:8080 -e NODE_ENV=production jtalk:digito-ui:$VERSION_TAG"
+
 
