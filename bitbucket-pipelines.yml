@@ -84,14 +84,12 @@ pipelines:
         - parallel:
           - step:
              name: deploy-api
-             deployment: production
              script:
                - echo "Exporting tag from " `pwd`/docker-tag.txt
                - export VERSION_TAG=`cat docker-tag.txt`
                - ssh root@digito.jtalk.me "docker stop digito-api; docker run -d --rm --name digito-api -p 8080:80 -e UI_LOCATION=http://digito.jtalk.me jtalk:digito-api:$VERSION_TAG"
           - step:
               name: deploy-ui
-              deployment: production
               script:
                 - echo "Exporting tag from " `pwd`/docker-tag.txt
                 - export VERSION_TAG=`cat docker-tag.txt`
