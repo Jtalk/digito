@@ -13,10 +13,10 @@ common:
       step:
         name: set-version
         script:
-          - echo "Tag is" $DOCKER_TAG
           - export TAG="$BITBUCKET_BRANCH"-"$BITBUCKET_BUILD_NUMBER"
           - echo -n $TAG > docker-tag.txt
-          - echo "Tag $TAG was saved to" `pwd`/docker-tag.txt
+        artifacts:
+          - docker-tag.txt
     - &apiBuildStep
       step: 
         name: api-build
