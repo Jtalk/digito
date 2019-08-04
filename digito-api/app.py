@@ -16,6 +16,7 @@ app = Flask(__name__)
 cors = CORS(app)
 log = logging.getLogger('app')
 
+print('Starting app...')
 
 @app.route('/')
 def index():

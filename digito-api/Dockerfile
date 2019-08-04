@@ -4,6 +4,7 @@ COPY ./ /app/
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 RUN python -m nose2
+RUN rm -r tests
 ENV LOGGER_LEVEL=INFO
 ENV VERBOSE=0
 # ENV UI_LOCATION=depends on deployment
