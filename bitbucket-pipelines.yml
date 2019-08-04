@@ -79,20 +79,26 @@ pipelines:
           - *uiBuildStep
         - *setDockerTag
         - parallel:
-          - *apiDockerPushStep
+    #      - *apiDockerPushStep
           - *uiDockerPushStep
         - parallel:
-          - step:
-             name: deploy-api
-             script:
-               - echo "Exporting tag from " `pwd`/docker-tag.txt
-               - export VERSION_TAG=`cat docker-tag.txt`
-               - ssh root@digito.jtalk.me "docker stop digito-api; docker run -d --rm --name digito-api -p 8080:80 -e UI_LOCATION=http://digito.jtalk.me jtalk:digito-api:$VERSION_TAG"
+   #       - step:
+    #         name: deploy-api
+     #        script:
+      #         - echo "Exporting tag from " `pwd`/docker-tag.txt
+       #        - export VERSION_TAG=`cat docker-tag.txt`
+        #       - ssh root@digito.jtalk.me "docker stop digito-api; docker run -d --rm --name digito-api -p 8080:80 -e UI_LOCATION=http://digito.jtalk.me jtalk:digito-api:$VERSION_TAG"
           - step:
               name: deploy-ui
               script:
                 - echo "Exporting tag from " `pwd`/docker-tag.txt
                 - export VERSION_TAG=`cat docker-tag.txt`
-                - ssh root@digito.jtalk.me "docker stop digito-ui; docker run -d --rm --name digito-ui -p 80:80 -e REACT_APP_API_LOCATION=http://digito.jtalk.me:8080 -e NODE_ENV=production jtalk:digito-ui:$VERSION_TAG"
+                - pipe: atlassian/ssh-run:0.2.2
+                  variables:
+                    SSH_USER: 'root'
+                    SERVER: 'digito.jtalk.me'
+                    COMMAND: 'docker stop digito-ui; docker run -d --rm --name digito-ui -p 80:80 -e REACT_APP_API_LOCATION=http://digito.jtalk.me:8080 -e NODE_ENV=production jtalk:digito-ui:$VERSION_TAG'
+                    MODE: 'command'
+
 
 
