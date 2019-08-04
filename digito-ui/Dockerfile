@@ -3,12 +3,17 @@ EXPOSE 80
 EXPOSE 443
 COPY . /app
 WORKDIR /app
+ARG API_LOCATION=http://localhost:8080
+ARG PREBUILT=0
 ENV NODE_ENV=production
 ENV PORT=80
-# ENV REACT_APP_API_LOCATION=depends on deployment
+ENV REACT_APP_API_LOCATION=$API_LOCATION
+ENV PREBUILT=$PREBUILT
 RUN npm install
 RUN CI=true npm run test src
-RUN npm run build
+RUN test "$PREBUILT" != 0 && echo "Pre-building CRA" && npm run build || echo "CRA pre-build disabled"
 RUN echo Building for $NODE_ENV
-RUN test "$NODE_ENV" = 'production' && rm -r src || echo -n ''
-CMD ["npm", "run", "serve"]
+RUN test "$NODE_ENV" = 'production' && test "$PREBUILT" != 0 \
+        && echo "Building for production with a pre-built CRA, removing sources" && rm -r src \
+        || echo -n ''
+CMD ["npm", "run", "serve-docker"]
