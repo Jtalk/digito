@@ -49,6 +49,7 @@ common:
           - docker build -t jtalk/digito-api:$VERSION_TAG .
           - docker push jtalk/digito-api:$VERSION_TAG
           - docker tag jtalk/digito-api:$VERSION_TAG jtalk/digito-api:latest
+          - docker push jtalk/digito-api:latest
         services:
           - docker
     - &uiDockerPushStep
@@ -63,6 +64,7 @@ common:
           - docker build -t jtalk/digito-ui:$VERSION_TAG .
           - docker push jtalk/digito-ui:$VERSION_TAG
           - docker tag jtalk/digito-ui:$VERSION_TAG jtalk/digito-ui:latest
+          - docker push jtalk/digito-ui:latest
         services:
           - docker
 pipelines:
