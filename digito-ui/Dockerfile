@@ -10,7 +10,6 @@ ENV PORT=80
 ENV REACT_APP_API_LOCATION=$API_LOCATION
 ENV PREBUILT=$PREBUILT
 RUN npm install
-RUN CI=true npm run test src
 RUN test "$PREBUILT" != 0 && echo "Pre-building CRA" && npm run build || echo "CRA pre-build disabled"
 RUN echo Building for $NODE_ENV
 RUN test "$NODE_ENV" = 'production' && test "$PREBUILT" != 0 \
