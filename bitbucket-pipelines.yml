@@ -97,7 +97,7 @@ pipelines:
                   variables:
                     SSH_USER: 'root'
                     SERVER: 'digito.jtalk.me'
-                    COMMAND: 'docker stop digito-ui; docker run -d --rm --name digito-ui -p 80:80 -e REACT_APP_API_LOCATION=http://digito.jtalk.me:8080 -e NODE_ENV=production jtalk:digito-ui:$VERSION_TAG'
+                    COMMAND: '"docker stop digito-ui; docker run -d --rm --name digito-ui -p 80:80 -e REACT_APP_API_LOCATION=http://digito.jtalk.me:8080 -e NODE_ENV=production $DOCKER_HUB_USER/digito-ui:$VERSION_TAG"'
                     MODE: 'command'
                     DEBUG: 'true'
 
