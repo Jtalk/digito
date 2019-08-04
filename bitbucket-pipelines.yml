@@ -13,7 +13,9 @@ common:
       step:
         name: set-version
         script:
-          - echo -n "$BITBUCKET_BRANCH"-"$BITBUCKET_BUILD_NUMBER" > docker-tag.txt
+          - export TAG="$BITBUCKET_BRANCH"-"$BITBUCKET_BUILD_NUMBER"
+          - echo -n $TAG > docker-tag.txt
+          - echo "Tag $TAG was saved to" `pwd`/docker-tag.txt
     - &apiBuildStep
       step: 
         name: api-build
@@ -39,6 +41,7 @@ common:
         name: api-docker-push
         image: docker:stable
         script:
+          - echo "Exporting tag from " `pwd`/docker-tag.txt
           - export VERSION_TAG=`cat docker-tag.txt`
           - cd digito-api
           - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD
@@ -52,6 +55,7 @@ common:
         name: ui-docker-push
         image: docker:stable
         script:
+          - echo "Exporting tag from " `pwd`/docker-tag.txt
           - export VERSION_TAG=`cat docker-tag.txt`
           - cd digito-ui
           - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD
