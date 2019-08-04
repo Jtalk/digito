@@ -42,7 +42,3 @@ def health():
 def prepare():
     recognition.prepare()
     log.info('The model is successfully trained')
-
-
-# WSGI
-application = app
