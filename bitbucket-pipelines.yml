@@ -61,7 +61,7 @@ common:
           - export VERSION_TAG=`cat docker-tag.txt`
           - cd digito-ui
           - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD
-          - docker build -t jtalk/digito-ui:$VERSION_TAG .
+          - docker build -t jtalk/digito-ui:$VERSION_TAG --build-arg PREBUILT=0 .
           - docker push jtalk/digito-ui:$VERSION_TAG
           - docker tag jtalk/digito-ui:$VERSION_TAG jtalk/digito-ui:latest
           - docker push jtalk/digito-ui:latest
@@ -81,23 +81,13 @@ pipelines:
         - parallel:
           - *apiDockerPushStep
           - *uiDockerPushStep
-  #      - step:
-  #          name: deploy
-  #          deployment: production
-  #          image: kramos/alpine-zip:latest
-  #          script:
-  #          - cd digito-ui
-  #          - zip -r digito-ui.zip . -x **.test.js
-  #          - pipe: atlassian/aws-elasticbeanstalk-deploy:0.2.9
-  #            variables:
-  #              AWS_ACCESS_KEY_ID: '$AWS_ACCESS_KEY'
-  #              AWS_SECRET_ACCESS_KEY: '$AWS_SECRET_KEY'
-  #              AWS_DEFAULT_REGION: 'eu-west-2'
-  #              APPLICATION_NAME: 'digito'
-  #              ENVIRONMENT_NAME: 'ui-prod2'
-  #              ZIP_FILE: 'digito-ui.zip'
-  #              S3_BUCKET: 'elasticbeanstalk-eu-west-2-858907644507' 
-  #              VERSION_LABEL: 'digito-ui-${BITBUCKET_BUILD_NUMBER}-${BITBUCKET_COMMIT:0:8}'
+        - step:
+            name: deploy
+            deployment: production
+            script:
+              - echo "Exporting tag from " `pwd`/docker-tag.txt
+              - export VERSION_TAG=`cat docker-tag.txt`
+              - ssh root@digito.jtalk.me -c "docker stop digito-ui; docker run -d --rm --name digito-ui -p 80:80 -e REACT_APP_API_LOCATION=http://digito.jtalk.me -e NODE_ENV=production jtalk:digito-ui:$VERSION_TAG"
   #          - cd ../digito-api
   #          - zip -r digito-api.zip . -x tests
   #          - pipe: atlassian/aws-elasticbeanstalk-deploy:0.2.9
