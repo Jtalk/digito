@@ -79,7 +79,7 @@ pipelines:
           - *uiBuildStep
         - *setDockerTag
         - parallel:
-    #      - *apiDockerPushStep
+          - *apiDockerPushStep
           - *uiDockerPushStep
         - parallel:
           - step:
@@ -92,7 +92,6 @@ pipelines:
                    SSH_USER: 'root'
                    SERVER: 'digito.jtalk.me'
                    COMMAND: './deploy.sh digito-api $DOCKER_HUB_USER/digito-api:$VERSION_TAG -p 8080:80 -e UI_LOCATION=http://digito.jtalk.me'
-                   DEBUG: 'true'
           - step:
               name: deploy-ui
               script:
@@ -103,7 +102,6 @@ pipelines:
                     SSH_USER: 'root'
                     SERVER: 'digito.jtalk.me'
                     COMMAND: './deploy.sh digito-ui $DOCKER_HUB_USER/digito-ui:$VERSION_TAG -p 80:80 -e REACT_APP_API_LOCATION=http://digito.jtalk.me:8080 -e NODE_ENV=production'
-                    DEBUG: 'true'
 
 
 
