@@ -43,4 +43,5 @@ workflows:
           after_checkout:
             - attach_workspace:
                 at: build
+          requires: [build-ui]
 
