@@ -9,8 +9,11 @@ executors:
     docker:
       - image: circleci/node:11
     working_directory: ~/project/digito-ui
+  docker:
+    docker:
+      - image: circleci/node:11
     environment:
-      DOCKER_IMAGE: jtalk/digito-ui
+      UI_DOCKER_IMAGE: jtalk/digito-ui
 
 
 jobs:
@@ -36,12 +39,13 @@ workflows:
       - build-ui
       - docker/publish:
           context: docker
-          executor: node
+          executor: docker
           use-remote-docker: yes
-          image: $DOCKER_IMAGE
+          path: digito-ui
+          image: $UI_DOCKER_IMAGE
           tag: $CIRCLE_BRANCH-$CIRCLE_BUILD_NUM
           after_checkout:
             - attach_workspace:
-                at: build
+                at: digito-ui/build
           requires: [build-ui]
 
