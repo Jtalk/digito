@@ -1,0 +1,46 @@
+version: 2.1
+
+orbs:
+  npm: circleci/node@1.1
+  docker: circleci/docker@0.5.13
+
+executors:
+  node:
+    docker:
+      - image: circleci/node:11
+    working_directory: ~/project/digito-ui
+    environment:
+      DOCKER_IMAGE: jtalk/digito-ui
+
+
+jobs:
+  build-ui:
+    executor: node
+    steps:
+      - checkout:
+          path: ~/project
+      - npm/with-cache:
+          dir: node_modules
+          steps:
+            - run: npm install
+            - run: npm test src
+            - run: npm run build
+      - persist_to_workspace:
+          root: build
+          paths:
+            - "*"
+
+workflows:
+  build-workflow:
+    jobs:
+      - build-ui
+      - docker/publish:
+          context: docker
+          executor: node
+          use-remote-docker: yes
+          image: $DOCKER_IMAGE
+          tag: $CIRCLE_BRANCH-$CIRCLE_BUILD_NUM
+          after_checkout:
+            - attach_workspace:
+                at: build
+
