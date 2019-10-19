@@ -5,8 +5,8 @@ variables:
   API_IMAGE: tiangolo/uwsgi-nginx-flask:python3.7
   UI_IMAGE: node:12-alpine
   DOCKER_TAG: $CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA
-  API_CACHE_KEY: api-"$CI_COMMIT_REF_SLUG"
-  UI_CACHE_KEY: ui-"$CI_COMMIT_REF_SLUG"
+  API_CACHE_KEY: api-$CI_COMMIT_REF_SLUG
+  UI_CACHE_KEY: ui-$CI_COMMIT_REF_SLUG
   DOCKER_HOST: tcp://docker:2375
   DOCKER_TLS_CERTDIR: ""
 
