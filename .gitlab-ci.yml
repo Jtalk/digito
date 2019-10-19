@@ -1,0 +1,84 @@
+image: alpine
+
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/digito-api/.cache/pip"
+  API_IMAGE: tiangolo/uwsgi-nginx-flask:python3.7
+  UI_IMAGE: node:12-alpine
+  DOCKER_TAG: $CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA
+  API_CACHE_KEY: api-"$CI_COMMIT_REF_SLUG"
+  UI_CACHE_KEY: ui-"$CI_COMMIT_REF_SLUG"
+  DOCKER_HOST: tcp://docker:2375
+  DOCKER_TLS_CERTDIR: ""
+
+stages:
+  - build
+  - docker
+  - deploy
+
+.api-cache-paths: &api-cache
+  - digito-api/node_modules
+
+.ui-cache-paths: &ui-cache
+  - digito-ui/.cache/pip
+  - digito-ui/.env
+
+build-api:
+  stage: build
+  image: $API_IMAGE
+  before_script:
+    - cd digito-api
+    - python -m venv .env
+    - source .env/bin/activate
+  script: 
+    - pip install -r requirements.txt
+    - python -m nose2
+  cache:
+    key: $API_CACHE_KEY
+    paths: *api-cache
+  artifacts:
+    paths: 
+      - digito-api/.env
+
+build-ui:
+  stage: build
+  image: $UI_IMAGE
+  before_script:
+    - cd digito-ui
+  script:
+    - npm install
+    - npm test src/
+    - npm run build
+  cache:
+    key: $UI_CACHE_KEY
+    paths: *ui-cache
+  artifacts:
+    paths: 
+      - digito-ui/node_modules
+
+push-api:
+  stage: docker
+  image: docker:stable
+  services:
+    - docker:dind
+  variables:
+    PROJECT_NAME: digito-api
+  needs: [build-api]
+  before_script:
+    - cd $PROJECT_NAME
+    - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+  script:
+    - docker build -t jtalk/$PROJECT_NAME:$DOCKER_TAG
+    - docker tag jtalk/$PROJECT_NAME:$DOCKER_TAG jtalk/$PROJECT_NAME:latest
+    - docker push jtalk/$PROJECT_NAME:$DOCKER_TAG
+    - docker push jtalk/$PROJECT_NAME:latest
+  after_script:
+    - docker save -o docker-image.tar jtalk/$PROJECT_NAME:$DOCKER_TAG 
+  artifacts:
+    paths:
+      - $PROJECT_NAME/docker-image.tar
+
+push-ui:
+  extends: push-api
+  variables:
+    PROJECT_NAME: digito-ui
+  needs: [build-ui]

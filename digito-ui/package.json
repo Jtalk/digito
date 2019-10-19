@@ -41,7 +41,6 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "serve": "./node_modules/.bin/serve -s build",
-    "serve-docker": "test \"$PREBUILT\" = 0 && npm run build; npm run serve"
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -1,15 +1,16 @@
-FROM node:12
+FROM node:12-alpine
 
 EXPOSE 80
 EXPOSE 443
 WORKDIR /app
-COPY build ./
+COPY build/ ./build
 COPY package.json ./
 COPY package-lock.json ./
 
-ARG API_LOCATION=http://localhost:8080
-ENV NODE_ENV=production
 ENV PORT=80
-ENV REACT_APP_API_LOCATION=$API_LOCATION
+
+# Set by docker run, per-environment
+# ENV REACT_APP_API_LOCATION=http://localhost:8080
+# ENV NODE_ENV=production
 
 CMD ["npm", "run", "serve"]
