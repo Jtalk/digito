@@ -28,10 +28,10 @@ build-api:
   before_script:
     - cd digito-api
     - pip install nose2
-    - python -m venv .env
+    - python -m venv --system-site-packages .env
     - source .env/bin/activate
   script: 
-    - pip install -r requirements.txt
+    - pip install -I -r requirements.txt
     - python -m nose2
   cache:
     key: $API_CACHE_KEY
