@@ -16,17 +16,18 @@ stages:
   - deploy
 
 .api-cache-paths: &api-cache
-  - digito-api/node_modules
+  - digito-api/.cache/pip
+  - digito-api/.env
 
 .ui-cache-paths: &ui-cache
-  - digito-ui/.cache/pip
-  - digito-ui/.env
+  - digito-ui/node_modules
 
 build-api:
   stage: build
   image: $API_IMAGE
   before_script:
     - cd digito-api
+    - pip install nose2
     - python -m venv .env
     - source .env/bin/activate
   script: 
