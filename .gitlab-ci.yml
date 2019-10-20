@@ -9,6 +9,7 @@ variables:
   UI_CACHE_KEY: ui-$CI_COMMIT_REF_SLUG
   DOCKER_HOST: tcp://docker:2375
   DOCKER_TLS_CERTDIR: ""
+  WITH_SSH: ssh -i $DEPLOY_SSH_KEY $DEPLOY_SSH_ENDPOINT
 
 stages:
   - build
@@ -83,3 +84,16 @@ push-ui:
   variables:
     PROJECT_NAME: digito-ui
   needs: [build-ui]
+
+deploy-ui:
+  stage: deploy
+  environment:
+    name: production
+    url: http://digito.jtalk.me
+  variables:
+    APP_NAME: digito-ui
+    API_LOCATION: http://digito.jtalk.me:8080
+    DOCKER_ENV_VARS: -e REACT_APP_API_LOCATION=$API_LOCATION -e NODE_ENV=$CI_ENVIRONMENT_NAME
+  script:
+    - $WITH_SSH "docker stop $APP_NAME"
+    - $WITH_SSH "docker run -d --restart=always --name $APP_NAME $DOCKER_ENV_VARS jtalk/$APP_NAME:$DOCKER_TAG"
