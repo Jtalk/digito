@@ -74,7 +74,7 @@ push-api:
     - docker push jtalk/$PROJECT_NAME:$DOCKER_TAG
     - docker push jtalk/$PROJECT_NAME:latest
   after_script:
-    - docker save -o docker-image.tar jtalk/$PROJECT_NAME:$DOCKER_TAG 
+    - docker save -o $PROJECT_NAME/docker-image.tar jtalk/$PROJECT_NAME:$DOCKER_TAG 
   artifacts:
     paths:
       - $PROJECT_NAME/docker-image.tar
