@@ -90,6 +90,8 @@ deploy-ui:
   environment:
     name: production
     url: http://digito.jtalk.me
+  only:
+    - master
   variables:
     APP_NAME: digito-ui
     API_LOCATION: http://digito.jtalk.me:8080
