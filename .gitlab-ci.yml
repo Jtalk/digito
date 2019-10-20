@@ -54,6 +54,7 @@ build-ui:
   artifacts:
     paths: 
       - digito-ui/node_modules
+      - digito-ui/build
 
 push-api:
   stage: docker
