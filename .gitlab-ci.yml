@@ -98,6 +98,7 @@ deploy-ui:
     DOCKER_ENV_VARS: -e REACT_APP_API_LOCATION=$API_LOCATION -e NODE_ENV=$CI_ENVIRONMENT_NAME
   before_script:
     - apk add openssh
+    - echo "Using SSH command $WITH_SSH"
   script:
     - $WITH_SSH "docker stop $APP_NAME"
     - $WITH_SSH "docker run -d --restart=always --name $APP_NAME $DOCKER_ENV_VARS jtalk/$APP_NAME:$DOCKER_TAG"
