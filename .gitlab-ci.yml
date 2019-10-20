@@ -68,7 +68,7 @@ push-api:
     - cd $PROJECT_NAME
     - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
   script:
-    - docker build -t jtalk/$PROJECT_NAME:$DOCKER_TAG
+    - docker build -t jtalk/$PROJECT_NAME:$DOCKER_TAG .
     - docker tag jtalk/$PROJECT_NAME:$DOCKER_TAG jtalk/$PROJECT_NAME:latest
     - docker push jtalk/$PROJECT_NAME:$DOCKER_TAG
     - docker push jtalk/$PROJECT_NAME:latest
