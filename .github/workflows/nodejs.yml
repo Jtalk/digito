@@ -59,6 +59,7 @@ jobs:
           export BRANCH_NAME="${GITHUB_REF#refs/heads/}"
           docker tag "$DOCKER_IMAGE:$GITHUB_SHA" "$DOCKER_IMAGE:$BRANCH_NAME"
           docker push "$DOCKER_IMAGE:$BRANCH_NAME"
+          echo ${{ github.ref }}
       - name: Push as current
         if: github.ref == '/refs/heads/master'
         run: |
