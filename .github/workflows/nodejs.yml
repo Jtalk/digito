@@ -48,20 +48,20 @@ jobs:
       - name: Build docker image
         working-directory: digito-ui
         run: |
-          docker build -t $DOCKER_IMAGE:$GITHUB_SHA
+          docker build -t "$DOCKER_IMAGE:$GITHUB_SHA" .
       - name: Push current artefact
         run: |
           docker push $DOCKER_BUILD_TAG
       - name: Push branch artefact
         if: github.ref != null
         run: |
-          docker tag $DOCKER_IMAGE:$GITHUB_SHA $DOCKER_IMAGE:$GITHUB_REF
-          docker push $DOCKER_IMAGE:$GITHUB_REF
+          docker tag "$DOCKER_IMAGE:$GITHUB_SHA" "$DOCKER_IMAGE:$GITHUB_REF"
+          docker push "$DOCKER_IMAGE:$GITHUB_REF"
       - name: Push as current
         if: github.ref == 'master'
         run: |
-          docker tag $DOCKER_IMAGE:$GITHUB_SHA $DOCKER_IMAGE:current
-          docker push $DOCKER_IMAGE:current
+          docker tag "$DOCKER_IMAGE:$GITHUB_SHA" "$DOCKER_IMAGE:current"
+          docker push "$DOCKER_IMAGE:current"
         
         
 
