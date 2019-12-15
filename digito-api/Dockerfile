@@ -1,11 +1,12 @@
-FROM tiangolo/uwsgi-nginx-flask:python3.7
-RUN rm ./*
-COPY .env/ .env/
+FROM python:3.7
+RUN pip install --upgrade pip
+RUN pip install 'gunicorn>=20.0.0,<21.0.0'
+COPY requirements.txt ./
 COPY model/ model/
 COPY *.py ./
-COPY uwsgi.ini ./
-COPY pyvenv.cfg ./
+RUN pip install -r requirements.txt
 ENV LOGGER_LEVEL=INFO
 ENV VERBOSE=0
 # ENV UI_LOCATION=depends on deployment
 # ENV LOGGER_FORMAT=see logconf.py
+CMD ["gunicorn", "--workers=2", "--threads=4", "--worker-class=gthread", "--log-file=-", "app:app"]
