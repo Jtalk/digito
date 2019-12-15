@@ -49,8 +49,8 @@ jobs:
       - name: Push as current
         if: github.ref == 'refs/heads/master'
         run: |
-          docker tag "$DOCKER_IMAGE:$GITHUB_SHA" "$DOCKER_IMAGE:current"
-          docker push "$DOCKER_IMAGE:current"
+          docker tag "$DOCKER_IMAGE:$GITHUB_SHA" "$DOCKER_IMAGE:latest"
+          docker push "$DOCKER_IMAGE:latest"
         
         
         
