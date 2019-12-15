@@ -1,4 +1,4 @@
-name: Python application
+name: Digito API
 
 on: [push]
 
