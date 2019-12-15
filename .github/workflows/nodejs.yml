@@ -2,19 +2,18 @@ name: Digito UI
 
 on: [push]
 
-env:
-  DOCKER_VERSION: $GITHUB_SHA
-  DOCKER_REF_VERSION: $GITHUB_REF
-
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [12.x]
     steps:
     - uses: actions/checkout@v1
-    - name: Set up Node.JS $NODE_VERSION
+    - name: Set up Node.JS ${{ env.NODE }}
       uses: actions/setup-node@v1
       with:
-        node-version: 12.x
+        node-version: ${{ matrix.node }}
     - name: Build UI
       working-directory: digito-ui
       env:
@@ -33,8 +32,8 @@ jobs:
     needs: build
     env:
       DOCKER_IMAGE: jtalk/digito-ui
-      DOCKER_BUILD_TAG: $DOCKER_IMAGE:$DOCKER_VERSION
-      DOCKER_REF_TAG: $DOCKER_IMAGE:$DOCKER_REF_VERSION
+      DOCKER_BUILD_TAG: jtalk/digito-ui
+      DOCKER_REF_TAG: jtalk/digito-ui:$GITHUB_REF
     steps:
       - uses: actions/checkout@v1
       - name: Download built app
@@ -44,24 +43,24 @@ jobs:
       - name: Docker Login
         uses: Azure/docker-login@v1
         with:
-          username: $DOCKER_USERNAME
-          password: $DOCKER_PASSWORD
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Build docker image
         working-directory: digito-ui
         run: |
-          docker build -t $DOCKER_BUILD_TAG
+          docker build -t $DOCKER_IMAGE::$GITHUB_SHA
       - name: Push current artefact
         run: |
           docker push $DOCKER_BUILD_TAG
       - name: Push branch artefact
         if: github.ref != null
         run: |
-          docker tag $DOCKER_BUILD_TAG $DOCKER_REF_TAG
-          docker push $DOCKER_REF_TAG
+          docker tag $DOCKER_IMAGE:$GITHUB_SHA $DOCKER_IMAGE:$GITHUB_REF
+          docker push $DOCKER_IMAGE:$GITHUB_REF
       - name: Push as current
         if: github.ref == 'master'
         run: |
-          docker tag $DOCKER_BUILD_TAG $DOCKER_IMAGE:current
+          docker tag $DOCKER_IMAGE:$GITHUB_SHA $DOCKER_IMAGE:current
           docker push $DOCKER_IMAGE:current
         
         
