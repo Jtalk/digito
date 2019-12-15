@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   build-release:
-    name: Build and Release to DockerHub
+    name: Build and Release
     runs-on: ubuntu-latest
     strategy:
       matrix:
