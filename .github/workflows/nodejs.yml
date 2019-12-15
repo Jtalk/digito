@@ -48,7 +48,7 @@ jobs:
       - name: Build docker image
         working-directory: digito-ui
         run: |
-          docker build -t $DOCKER_IMAGE::$GITHUB_SHA
+          docker build -t $DOCKER_IMAGE:$GITHUB_SHA
       - name: Push current artefact
         run: |
           docker push $DOCKER_BUILD_TAG
