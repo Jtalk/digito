@@ -3,7 +3,6 @@ name: Digito UI
 on: [push]
 
 env:
-  NODE_VERSION: 12.x
   DOCKER_VERSION: $GITHUB_SHA
   DOCKER_REF_VERSION: $GITHUB_REF
 
@@ -15,7 +14,7 @@ jobs:
     - name: Set up Node.JS $NODE_VERSION
       uses: actions/setup-node@v1
       with:
-        node-version: $NODE_VERSION
+        node-version: 12.x
     - name: Build UI
       working-directory: digito-ui
       env:
