@@ -59,7 +59,7 @@ jobs:
           docker tag $DOCKER_BUILD_TAG $DOCKER_REF_TAG
           docker push $DOCKER_REF_TAG
       - name: Push as current
-        if: github.ref == master
+        if: github.ref == 'master'
         run: |
           docker tag $DOCKER_BUILD_TAG $DOCKER_IMAGE:current
           docker push $DOCKER_IMAGE:current
