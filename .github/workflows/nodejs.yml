@@ -1,0 +1,81 @@
+name: Digito UI
+
+on: [push]
+
+env:
+  NODE_VERSION: 12.x
+  DOCKER_VERSION: $GITHUB_SHA
+  DOCKER_REF_VERSION: $GITHUB_REF
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Set up Node.JS $NODE_VERSION
+      uses: actions/setup-node@v1
+      with:
+        node-version: $NODE_VERSION
+    - name: Build UI
+      working-directory: digito-ui
+      env:
+        CI: true
+      run: |
+        npm ci
+        npm run build
+        npm test src/
+    - name: Upload UI build
+      uses: actions/upload-artifact@v1
+      with:
+        name: ui-build
+        path: digito-ui/build
+  release-docker:
+    runs-on: ubuntu-latest
+    env:
+      DOCKER_IMAGE: jtalk/digito-ui
+      DOCKER_BUILD_TAG: $DOCKER_IMAGE:$DOCKER_VERSION
+      DOCKER_REF_TAG: $DOCKER_IMAGE:$DOCKER_REF_VERSION
+    steps:
+      - uses: actions/checkout@v1
+      - name: Download built app
+        uses: actions/download-artifact@v1
+        with:
+          name: ui-build
+      - name: Docker Login
+        uses: Azure/docker-login@v1
+        with:
+          username: $DOCKER_USERNAME
+          password: $DOCKER_PASSWORD
+      - name: Build docker image
+        working-directory: digito-ui
+        run: |
+          docker build -t $DOCKER_BUILD_TAG
+      - name: Push current artefact
+        run: |
+          docker push $DOCKER_BUILD_TAG
+      - name: Push branch artefact
+        if: github.ref != null
+        run: |
+          docker tag $DOCKER_BUILD_TAG $DOCKER_REF_TAG
+          docker push $DOCKER_REF_TAG
+      - name: Push as current
+        if: github.ref == master
+        run: |
+          docker tag $DOCKER_BUILD_TAG $DOCKER_IMAGE:current
+          docker push $DOCKER_IMAGE:current
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
