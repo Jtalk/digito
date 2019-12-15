@@ -60,7 +60,7 @@ jobs:
           docker tag "$DOCKER_IMAGE:$GITHUB_SHA" "$DOCKER_IMAGE:$BRANCH_NAME"
           docker push "$DOCKER_IMAGE:$BRANCH_NAME"
       - name: Push as current
-        if: github.ref == 'master'
+        if: github.ref == '/refs/heads/master'
         run: |
           docker tag "$DOCKER_IMAGE:$GITHUB_SHA" "$DOCKER_IMAGE:current"
           docker push "$DOCKER_IMAGE:current"
