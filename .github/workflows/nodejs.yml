@@ -31,6 +31,7 @@ jobs:
         path: digito-ui/build
   release-docker:
     runs-on: ubuntu-latest
+    needs: build
     env:
       DOCKER_IMAGE: jtalk/digito-ui
       DOCKER_BUILD_TAG: $DOCKER_IMAGE:$DOCKER_VERSION
