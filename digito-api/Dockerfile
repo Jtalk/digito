@@ -4,6 +4,7 @@ COPY .env/ .env/
 COPY model/ model/
 COPY *.py ./
 COPY uwsgi.ini ./
+COPY pyvenv.cfg ./
 ENV LOGGER_LEVEL=INFO
 ENV VERBOSE=0
 # ENV UI_LOCATION=depends on deployment
