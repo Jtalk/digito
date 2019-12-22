@@ -57,6 +57,8 @@ jobs:
     needs: build-release
     if: github.ref == 'refs/heads/master'
     steps:
+      - name: Create Kubernetes config directory
+        run: mkdir $HOME/.kube
       - name: Load Kubernetes config
         uses: digitalocean/action-doctl@v1.6.0
         env:
