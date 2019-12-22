@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: digito-ui-config
+data:
+  NODE_ENV: production
+  REACT_APP_API_LOCATION: [[API_URL]]
