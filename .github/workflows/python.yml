@@ -72,7 +72,7 @@ jobs:
         run: |
             # Good ol' kubernetes, still unable to figure image tags out on its own in 2019...
             # Also all this [[][[][]][[][]] is because Sed is kind of a retard when it comes to brackets.
-            sed -i "" 's/[[][[]IMAGE_TAG[]][]]/${{ github.sha }}/' deployment.yml
+            sed -i '.bak' 's/[[][[]IMAGE_TAG[]][]]/${{ github.sha }}/' deployment.yml
             # It's faster to deploy manually than to be figuring out all the Azure k8s-deploy's
             # idiosyncrasies one by one tbh.
             kubectl -n digito apply -f deployment.yml
