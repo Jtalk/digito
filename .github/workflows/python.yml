@@ -62,9 +62,11 @@ jobs:
         env:
           DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DO_TOKEN }}
         with:
-          args: kubernetes cluster kubeconfig show ${{ secrets.DO_K8S_CLUSTER_NAME }} > $GITHUB_WORKSPACE/.kubeconfig
-      - name: Kubernetes set context
-        uses: Azure/k8s-set-context@v1
+          args: kubernetes cluster kubeconfig show ${{ secrets.DO_K8S_CLUSTER_NAME }} > $HOME/.kube/config
+#       - name: Kubernetes set context
+#         uses: Azure/k8s-set-context@v1
+#         with:
+#           kubeconfig: .kubeconfig
       - name: Deploy to Kubernetes
         uses: Azure/k8s-deploy@v1
         with:
