@@ -81,7 +81,6 @@ jobs:
             # idiosyncrasies one by one tbh.
             kubectl apply -f deployment.yml
             kubectl apply -f service.yml
-            kubectl apply -f ingress.yml
             # Waiting for the rollout
             kubectl rollout status -w --timeout=1m -f deployment.yml
   verify:
