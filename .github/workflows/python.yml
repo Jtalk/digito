@@ -59,32 +59,25 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: Load Kubernetes config
-        # It would be soooo nice to have my k8s config saved to, you know, ~/.kube/config, like 
-        # all the normal kids do. Unfortunately, DigitalOcean has a better idea: why using standard
-        # paths when you can just lube everything with custom variables? It's obvious everybody likes
-        # specifying --kubeconfig=/some/long/paths at their every kubectl command instead of using the
-        # default paths & getting on with their lives.
-        uses: digitalocean/action-doctl@v1.6.0
         env:
           DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DO_TOKEN }}
-        with:
-          args: kubernetes cluster kubeconfig show ${{ secrets.DO_K8S_CLUSTER_NAME }} > $GITHUB_WORKSPACE/.kubeconfig
-      - name: Fix broken k8s deploy step below (thank you Microsoft for all the mental breakdowns)
-        # It would be so great if Azure/k8s-deploy could just, you know, pick up ~/.kube/config
-        # like normal kubernetes does... But what am I talking about, Microsoft wouldn't be where
-        # it is today if it was following normal conventions and rules. Create hacks, break things, reinstall Windows!
-        uses: Azure/k8s-set-context@v1
-        with:
-          kubeconfig: $GITHUB_WORKSPACE/.kubeconfig 
+        run: |
+          mkdir $HOME/.kube
+          docker run --rm \
+            -e "DIGITALOCEAN_ACCESS_TOKEN=$DIGITALOCEAN_ACCESS_TOKEN" \
+            digitalocean/doctl kubernetes cluster kubeconfig show ${{ secrets.DO_K8S_CLUSTER_NAME }} \
+            > $HOME/.kube/config
       - name: Deploy to Kubernetes
-        uses: Azure/k8s-deploy@v1
-        with:
-          namespace: digito
-          images: ${{ env.DOCKER_REVISION_TAG }}
-          manifests: |
-            digito-api/deploy/deployment.yml
-            digito-api/deploy/service.yml
-            digito-api/deploy/ingress.yml
+        working-directory: digito-api/deploy
+        run: |
+            # Good ol' kubernetes, still unable to figure image tags out on its own in 2019...
+            # Also all this [[][[][]][[][]] is because Sed is kind of a retard when it comes to brackets.
+            sed -i "" 's/[[][[]IMAGE_TAG[]][]]/${{ github.sha }}/' deployment.yml
+            # It's faster to deploy manually than to be figuring out all the Azure k8s-deploy's
+            # idiosyncrasies one by one tbh.
+            kubectl -n digito apply -f deployment.yml
+            kubectl -n digito apply -f service.yml
+            kubectl -n digito apply -f ingress.yml
   verify:
     name: Verify deployment
     runs-on: ubuntu-latest
