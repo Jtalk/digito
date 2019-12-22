@@ -16,7 +16,7 @@ jobs:
     env:
       PUBLIC_URL: /app
       NODE_ENV: production
-      REACT_APP_API_LOCATION: http://digito2.jtalk.me/api/
+      REACT_APP_API_LOCATION: http://digito.jtalk.me/api/
     steps:
     - uses: actions/checkout@v1
     - name: Set up Node.JS ${{ env.NODE }}
