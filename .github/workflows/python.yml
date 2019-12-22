@@ -57,6 +57,7 @@ jobs:
     needs: build-release
     if: github.ref == 'refs/heads/master'
     steps:
+      - uses: actions/checkout@v1
       - name: Load Kubernetes config
         # It would be soooo nice to have my k8s config saved to, you know, ~/.kube/config, like 
         # all the normal kids do. Unfortunately, DigitalOcean has a better idea: why using standard
