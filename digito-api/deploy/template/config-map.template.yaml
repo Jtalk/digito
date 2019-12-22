@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: digito-api-config
+data:
+  LOGGER_LEVEL: INFO
+  UI_LOCATION: [[CORS_UI_DOMAINS]]
