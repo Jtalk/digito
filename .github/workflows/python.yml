@@ -78,6 +78,8 @@ jobs:
             kubectl -n digito apply -f deployment.yml
             kubectl -n digito apply -f service.yml
             kubectl -n digito apply -f ingress.yml
+            # Waiting for the rollout
+            kubectl rollout status -w --timeout=1m -f deploy/deployment.yml
   verify:
     name: Verify deployment
     runs-on: ubuntu-latest
