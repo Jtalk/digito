@@ -1,12 +1,11 @@
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: digito-api
+  name: digito
   labels:
     app: digito
-    type: api
   annotations:
-    nginx.org/rewrites: "serviceName=digito-api rewrite=/api;"
+    nginx.org/rewrites: "serviceName=digito-api rewrite=/;serviceName=digito-ui rewrite=/;"
 
 spec:
   rules:
@@ -17,10 +16,18 @@ spec:
           backend:
             serviceName: digito-api
             servicePort: 80
+        - path: /app
+          backend:
+            serviceName: digito-ui
+            servicePort: 80
     - host: digito.jtalk.me
       http:
         paths:
         - path: /api
           backend:
             serviceName: digito-api
+            servicePort: 80
+        - path: /app
+          backend:
+            serviceName: digito-ui
             servicePort: 80
