@@ -39,7 +39,7 @@ jobs:
           docker build -t "$DOCKER_REVISION_TAG" .
       - name: Push current artefact
         run: |
-          docker push $DOCKER_BUILD_TAG
+          docker push "$DOCKER_REVISION_TAG"
       - name: Push branch artefact
         if: github.ref != null
         run: |
