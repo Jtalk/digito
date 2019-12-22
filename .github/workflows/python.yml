@@ -58,15 +58,23 @@ jobs:
     if: github.ref == 'refs/heads/master'
     steps:
       - name: Load Kubernetes config
+        # It would be soooo nice to have my k8s config saved to, you know, ~/.kube/config, like 
+        # all the normal kids do. Unfortunately, DigitalOcean has a better idea: why using standard
+        # paths when you can just lube everything with custom variables? It's obvious everybody likes
+        # specifying --kubeconfig=/some/long/paths at their every kubectl command instead of using the
+        # default paths & getting on with their lives.
         uses: digitalocean/action-doctl@v1.6.0
         env:
           DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DO_TOKEN }}
         with:
           args: kubernetes cluster kubeconfig show ${{ secrets.DO_K8S_CLUSTER_NAME }} > $GITHUB_WORKSPACE/.kubeconfig
-      - name: Move Kubernetes config to the right place (because DO's action is crap)
-        run: |
-          mkdir $HOME/.kube
-          mv $GITHUB_WORKSPACE/.kubeconfig $HOME/.kube/config
+      - name: Fix broken k8s deploy step below (thank you Microsoft for all the mental breakdowns)
+        # It would be so great if Azure/k8s-deploy could just, you know, pick up ~/.kube/config
+        # like normal kubernetes does... But what am I talking about, Microsoft wouldn't be where
+        # it is today if it was following normal conventions and rules. Create hacks, break things, reinstall Windows!
+        uses: Azure/k8s-set-context@v1
+        with:
+          kubeconfig: $GITHUB_WORKSPACE/.kubeconfig 
       - name: Deploy to Kubernetes
         uses: Azure/k8s-deploy@v1
         with:
