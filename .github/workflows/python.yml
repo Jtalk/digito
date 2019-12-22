@@ -56,6 +56,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: build-release
     if: github.ref == 'refs/heads/master'
+    env:
+      KUBE_NS: digito
     steps:
       - uses: actions/checkout@v1
       - name: Load Kubernetes config
@@ -73,11 +75,13 @@ jobs:
             # Good ol' kubernetes, still unable to figure image tags out on its own in 2019...
             # Also all this [[][[][]][[][]] is because Sed is kind of a retard when it comes to brackets.
             sed -i -- 's/[[][[]IMAGE_TAG[]][]]/${{ github.sha }}/' deployment.yml
+            # Fix namespace
+            kubectl config set-context --current --namespace=$KUBE_NS
             # It's faster to deploy manually than to be figuring out all the Azure k8s-deploy's
             # idiosyncrasies one by one tbh.
-            kubectl -n digito apply -f deployment.yml
-            kubectl -n digito apply -f service.yml
-            kubectl -n digito apply -f ingress.yml
+            kubectl apply -f deployment.yml
+            kubectl apply -f service.yml
+            kubectl apply -f ingress.yml
             # Waiting for the rollout
             kubectl rollout status -w --timeout=1m -f deployment.yml
   verify:
