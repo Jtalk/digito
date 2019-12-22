@@ -82,7 +82,7 @@ jobs:
             kubectl apply -f deployment.yml
             kubectl apply -f service.yml
             # Waiting for the rollout
-            kubectl rollout status -w --timeout=1m -f deployment.yml
+            kubectl rollout status -w --timeout=3m -f deployment.yml
   verify:
     name: Verify deployment
     runs-on: ubuntu-latest
