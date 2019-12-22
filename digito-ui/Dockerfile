@@ -4,6 +4,7 @@ EXPOSE 80
 EXPOSE 443
 WORKDIR /app
 COPY build/ ./build
+COPY node_modules/ ./node_modules
 COPY package.json ./
 COPY package-lock.json ./
 
