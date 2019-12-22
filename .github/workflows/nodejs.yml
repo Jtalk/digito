@@ -22,6 +22,14 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node }}
+    - name: Test UI
+      working-directory: digito-ui
+      env:
+        CI: true
+        NODE_ENV: development
+      run: |
+        npm ci
+        npm test src/
     - name: Build UI
       working-directory: digito-ui
       env:
@@ -29,7 +37,6 @@ jobs:
       run: |
         npm ci
         npm run build
-        npm test src/
     - name: Docker Login
       uses: Azure/docker-login@v1
       with:
