@@ -2,6 +2,10 @@ name: Digito API
 
 on: [push]
 
+env:
+  DOCKER_IMAGE: jtalk/digito-api
+  DOCKER_REVISION_TAG: ${{ env.DOCKER_IMAGE }}:${{ github.sha }}
+  
 jobs:
   build-release:
     name: Build and Release
@@ -9,10 +13,6 @@ jobs:
     strategy:
       matrix:
         python: [3.7]
-    env:
-      DOCKER_IMAGE: jtalk/digito-api
-      DOCKER_BUILD_TAG: jtalk/digito-api
-      DOCKER_REF_TAG: jtalk/digito-api:$GITHUB_REF
     steps:
       - uses: actions/checkout@v1
       - name: Set up Python ${{ matrix.python }}
@@ -36,7 +36,7 @@ jobs:
       - name: Build docker image
         working-directory: digito-api
         run: |
-          docker build -t "$DOCKER_IMAGE:$GITHUB_SHA" .
+          docker build -t "$DOCKER_REVISION_TAG" .
       - name: Push current artefact
         run: |
           docker push $DOCKER_BUILD_TAG
@@ -44,12 +44,12 @@ jobs:
         if: github.ref != null
         run: |
           export BRANCH_NAME="${GITHUB_REF#refs/heads/}"
-          docker tag "$DOCKER_IMAGE:$GITHUB_SHA" "$DOCKER_IMAGE:$BRANCH_NAME"
+          docker tag "$DOCKER_REVISION_TAG" "$DOCKER_IMAGE:$BRANCH_NAME"
           docker push "$DOCKER_IMAGE:$BRANCH_NAME"
-      - name: Push as current
+      - name: Push as latest
         if: github.ref == 'refs/heads/master'
         run: |
-          docker tag "$DOCKER_IMAGE:$GITHUB_SHA" "$DOCKER_IMAGE:latest"
+          docker tag "$DOCKER_REVISION_TAG" "$DOCKER_IMAGE:latest"
           docker push "$DOCKER_IMAGE:latest"
   deploy:
     name: Deploy to Kubernetes
@@ -63,10 +63,13 @@ jobs:
           DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DO_TOKEN }}
         with:
           args: kubernetes cluster kubeconfig show ${{ secrets.DO_K8S_CLUSTER_NAME }} > $GITHUB_WORKSPACE/.kubeconfig
+      - name: Kubernetes set context
+        uses: Azure/k8s-set-context@v1
       - name: Deploy to Kubernetes
         uses: Azure/k8s-deploy@v1
         with:
           namespace: digito
+          images: ${{ env.DOCKER_REVISION_TAG }}
           manifests: |
             digito-api/deploy/deployment.yml
             digito-api/deploy/service.yml
