@@ -37,10 +37,10 @@ spec:
             periodSeconds: 5
             failureThreshold: 6
             httpGet:
-              path: /health
+              path: /
               port: http
           livenessProbe:
             failureThreshold: 1
             httpGet: 
-              path: /health
+              path: /
               port: http
