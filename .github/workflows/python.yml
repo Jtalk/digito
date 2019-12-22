@@ -4,7 +4,7 @@ on: [push]
 
 env:
   DOCKER_IMAGE: jtalk/digito-api
-  DOCKER_REVISION_TAG: ${{ env.DOCKER_IMAGE }}:${{ github.sha }}
+  DOCKER_REVISION_TAG: jtalk/digito-api:${{ github.sha }}
   
 jobs:
   build-release:
