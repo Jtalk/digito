@@ -6,7 +6,7 @@ metadata:
     app: digito
     type: api
   annotations:
-    nginx.org/rewrites: "serviceName=digito-api rewrite=/;"
+    nginx.org/rewrites: "serviceName=digito-api rewrite=/api;"
 
 spec:
   rules:

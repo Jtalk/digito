@@ -6,7 +6,7 @@ metadata:
     app: digito
     type: ui
   annotations:
-    nginx.org/rewrites: "serviceName=digito-ui rewrite=/;"
+    nginx.org/rewrites: "serviceName=digito-ui rewrite=/app;"
 
 spec:
   rules:
