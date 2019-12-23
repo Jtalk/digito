@@ -138,7 +138,7 @@ def _load_mnist():
 
     x_train = x_train.astype('float32')
     x_test = x_test.astype('float32')
-    log.info('x_train shape:', x_train.shape)
+    log.info('x_train shape: %s', x_train.shape)
     log.info('%d train samples, %d test samples', x_train.shape[0], x_test.shape[0])
 
     y_train = to_categorical(y_train)
