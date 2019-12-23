@@ -9,17 +9,6 @@ metadata:
 
 spec:
   rules:
-    - host: digito2.jtalk.me
-      http:
-        paths:
-        - path: /api
-          backend:
-            serviceName: digito-api
-            servicePort: 80
-        - path: /app
-          backend:
-            serviceName: digito-ui
-            servicePort: 80
     - host: digito.jtalk.me
       http:
         paths:
@@ -27,7 +16,7 @@ spec:
           backend:
             serviceName: digito-api
             servicePort: 80
-        - path: /app
+        - path: /
           backend:
             serviceName: digito-ui
             servicePort: 80
