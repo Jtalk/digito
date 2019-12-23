@@ -46,6 +46,7 @@ config:
       dilation_rate: &id001 !!python/tuple
       - 1
       - 1
+      dtype: float32
       filters: 32
       kernel_constraint: null
       kernel_initializer:
@@ -73,6 +74,7 @@ config:
         config: {}
       beta_regularizer: null
       center: true
+      dtype: float32
       epsilon: 0.001
       gamma_constraint: null
       gamma_initializer:
@@ -92,6 +94,7 @@ config:
   - class_name: Activation
     config:
       activation: relu
+      dtype: float32
       name: activation_1
       trainable: true
   - class_name: Conv2D
@@ -105,6 +108,7 @@ config:
       bias_regularizer: null
       data_format: channels_last
       dilation_rate: *id001
+      dtype: float32
       filters: 64
       kernel_constraint: null
       kernel_initializer:
@@ -132,6 +136,7 @@ config:
         config: {}
       beta_regularizer: null
       center: true
+      dtype: float32
       epsilon: 0.001
       gamma_constraint: null
       gamma_initializer:
@@ -151,6 +156,7 @@ config:
   - class_name: Activation
     config:
       activation: relu
+      dtype: float32
       name: activation_2
       trainable: true
   - class_name: Conv2D
@@ -164,6 +170,7 @@ config:
       bias_regularizer: null
       data_format: channels_last
       dilation_rate: *id001
+      dtype: float32
       filters: 64
       kernel_constraint: null
       kernel_initializer:
@@ -189,6 +196,7 @@ config:
         config: {}
       beta_regularizer: null
       center: true
+      dtype: float32
       epsilon: 0.001
       gamma_constraint: null
       gamma_initializer:
@@ -208,11 +216,13 @@ config:
   - class_name: Activation
     config:
       activation: relu
+      dtype: float32
       name: activation_3
       trainable: true
   - class_name: MaxPooling2D
     config:
       data_format: channels_last
+      dtype: float32
       name: max_pooling2d_1
       padding: valid
       pool_size: &id003 !!python/tuple
@@ -223,6 +233,7 @@ config:
   - class_name: Flatten
     config:
       data_format: channels_last
+      dtype: float32
       name: flatten_1
       trainable: true
   - class_name: Dense
@@ -234,6 +245,7 @@ config:
         class_name: Zeros
         config: {}
       bias_regularizer: null
+      dtype: float32
       kernel_constraint: null
       kernel_initializer:
         class_name: VarianceScaling
@@ -249,6 +261,7 @@ config:
       use_bias: true
   - class_name: Dropout
     config:
+      dtype: float32
       name: dropout_1
       noise_shape: null
       rate: 0.4
@@ -263,6 +276,7 @@ config:
         class_name: Zeros
         config: {}
       bias_regularizer: null
+      dtype: float32
       kernel_constraint: null
       kernel_initializer:
         class_name: VarianceScaling
@@ -277,4 +291,4 @@ config:
       units: 10
       use_bias: true
   name: sequential_1
-keras_version: 2.2.4
+keras_version: 2.3.1
