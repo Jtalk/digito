@@ -5,24 +5,22 @@ on: [push]
 env:
   DOCKER_IMAGE: jtalk/digito-ui
   DOCKER_REVISION_TAG: jtalk/digito-ui:${{ github.sha }}
+  NODE_VERSION: 12.x
   
 jobs:
   build-release:
     name: Build and Release to Docker
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node: [12.x]
     env:
       PUBLIC_URL: ''
       NODE_ENV: production
       REACT_APP_API_LOCATION: http://digito.jtalk.me/api/
     steps:
     - uses: actions/checkout@v1
-    - name: Set up Node.JS ${{ env.NODE }}
+    - name: Set up Node.JS ${{ env.NODE_VERSION }}
       uses: actions/setup-node@v1
       with:
-        node-version: ${{ matrix.node }}
+        node-version: ${{ env.NODE_VERSION }}
     - name: Test UI
       working-directory: digito-ui
       env:

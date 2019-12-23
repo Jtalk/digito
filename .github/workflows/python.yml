@@ -5,20 +5,18 @@ on: [push]
 env:
   DOCKER_IMAGE: jtalk/digito-api
   DOCKER_REVISION_TAG: jtalk/digito-api:${{ github.sha }}
+  PYTHON_VERSION: 3.7
   
 jobs:
   build-release:
     name: Build and Release
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python: [3.7]
     steps:
       - uses: actions/checkout@v1
-      - name: Set up Python ${{ matrix.python }}
+      - name: Set up Python ${{ env.PYTHON_VERSION }}
         uses: actions/setup-python@v1
         with:
-          python-version: ${{ matrix.python }}
+          python-version: ${{ env.PYTHON_VERSION }}
       - name: Build app
         working-directory: digito-api
         run: |
