@@ -25,7 +25,7 @@ jobs:
           python -m venv --system-site-packages .env
           source .env/bin/activate
           pip install -I -r requirements.txt
-          python -m nose2
+          python -m nose2 tests
       - name: Docker Login
         uses: Azure/docker-login@v1
         with:
@@ -79,6 +79,7 @@ jobs:
             # idiosyncrasies one by one tbh.
             kubectl apply -f deployment.yml
             kubectl apply -f service.yml
+            kubectl apply -f ingress.yml
             # Waiting for the rollout
             kubectl rollout status -w --timeout=3m -f deployment.yml
   verify:
