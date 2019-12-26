@@ -99,7 +99,7 @@ jobs:
     steps:
       - name: Verify the healthcheck URL
         run: |
-          curl --fail http://digito2.jtalk.me/app
+          curl --fail https://digito.jtalk.me/
         
 
 
