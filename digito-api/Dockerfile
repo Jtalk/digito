@@ -10,4 +10,4 @@ ENV VERBOSE=0
 RUN pip freeze
 # ENV UI_LOCATION=depends on deployment
 # ENV LOGGER_FORMAT=see logconf.py
-CMD ["gunicorn", "--workers=4", "--threads=1", "--worker-class=gthread", "--log-file=-", "--bind=0.0.0.0:80", "app:app"]
+CMD ["gunicorn", "--workers=4", "--threads=1", "--worker-class=gthread", "--log-file=-", "--bind=0.0.0.0:80", "--preload", "app:app"]
