@@ -33,14 +33,21 @@ spec:
             - configMapRef:
                 name: digito-api-config
                 optional: no
+          resources:
+            limits:
+              cpu: 400m
+              memory: 400M
+            requests:
+              cpu: 100m
+              memory: 100M
           startupProbe:
             periodSeconds: 5
             failureThreshold: 6
             httpGet:
               path: /health
-              port: http
+              port: 80
           livenessProbe:
             failureThreshold: 1
             httpGet: 
               path: /health
-              port: http
+              port: 80

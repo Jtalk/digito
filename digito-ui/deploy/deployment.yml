@@ -10,7 +10,7 @@ spec:
     matchLabels:
       app: digito
       type: ui
-  replicas: 10
+  replicas: 4
   progressDeadlineSeconds: 120
   revisionHistoryLimit: 3
   strategy:
@@ -33,14 +33,21 @@ spec:
             - configMapRef:
                 name: digito-ui-config
                 optional: no
+          resources:
+            limits:
+              cpu: 100m
+              memory: 80M
+            requests:
+              cpu: 50m
+              memory: 50M
           startupProbe:
             periodSeconds: 5
             failureThreshold: 6
             httpGet:
               path: /
-              port: http
+              port: 80
           livenessProbe:
             failureThreshold: 1
             httpGet: 
               path: /
-              port: http
+              port: 80
