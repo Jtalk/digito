@@ -10,7 +10,7 @@ spec:
     matchLabels:
       app: digito
       type: api
-  replicas: 2
+  replicas: 1
   progressDeadlineSeconds: 120
   revisionHistoryLimit: 3
   strategy:
@@ -36,18 +36,19 @@ spec:
           resources:
             limits:
               cpu: 400m
-              memory: 400M
+              memory: 500M
             requests:
               cpu: 50m
               memory: 100M
           startupProbe:
-            periodSeconds: 5
+            periodSeconds: 10
             failureThreshold: 6
             httpGet:
               path: /health
               port: 80
           livenessProbe:
             failureThreshold: 1
+            timeoutSeconds: 10
             httpGet: 
               path: /health
               port: 80

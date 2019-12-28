@@ -10,7 +10,7 @@ spec:
     matchLabels:
       app: digito
       type: ui
-  replicas: 4
+  replicas: 2
   progressDeadlineSeconds: 120
   revisionHistoryLimit: 3
   strategy:
@@ -36,7 +36,7 @@ spec:
           resources:
             limits:
               cpu: 100m
-              memory: 80M
+              memory: 100M
             requests:
               cpu: 10m
               memory: 50M
