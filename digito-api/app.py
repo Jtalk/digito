@@ -3,6 +3,7 @@ import logconf
 logconf.init_logs()
 
 import os
+import sys
 import logging
 
 from flask import Flask, request, redirect
@@ -17,6 +18,7 @@ cors = CORS(app)
 log = logging.getLogger('app')
 
 print('Starting app...')
+
 
 @app.route('/')
 def index():
@@ -36,7 +38,9 @@ def recognise():
 
 @app.route('/health')
 def health():
+    recognition.check()
     return 'OK'
+
 
 
 @app.cli.command()

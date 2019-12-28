@@ -28,6 +28,10 @@ def recognise(img):
     return next(iter(net.recognise(img, verbose=_VERBOSE)))
 
 
+def check():
+    _get_network()
+
+
 def prepare():
     net = Net()
     net = train_mnist(net)
