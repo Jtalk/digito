@@ -10,14 +10,14 @@ spec:
     matchLabels:
       app: digito
       type: ui
-  replicas: 2
+  replicas: 10
   progressDeadlineSeconds: 120
   revisionHistoryLimit: 3
   strategy:
     type: RollingUpdate
     rollingUpdate:
       maxUnavailable: 50%
-      maxSurge: 100%
+      maxSurge: 50%
   template:
     metadata:
       labels:
