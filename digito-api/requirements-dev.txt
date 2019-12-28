@@ -7,5 +7,6 @@ mock==3.0.5
 multimethod==1.2
 nose2==0.9.1
 requests==2.22.0
+six==1.13.0
 urllib3==1.25.7
 waiting==1.4.1
