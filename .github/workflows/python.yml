@@ -35,6 +35,7 @@ jobs:
         working-directory: digito-api
         run: |
           docker build -t "$DOCKER_REVISION_TAG" .
+          pip install -r requirements-dev.txt
           python -m nose2 it
       - name: Push current artefact
         run: |
@@ -90,8 +91,15 @@ jobs:
     env:
       APP_HOSTNAME: https://digito.jtalk.me
     steps:
+      - uses: actions/checkout@v1
+      - name: Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
       - name: Verify the deployment
+        working-directory: digito-api
         run: |
+          pip install -r requirements-dev.txt
           python -m nose2 postdeploy
     
         
