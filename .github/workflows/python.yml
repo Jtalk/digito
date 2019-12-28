@@ -5,6 +5,7 @@ on: [push]
 env:
   DOCKER_IMAGE: jtalk/digito-api
   DOCKER_REVISION_TAG: jtalk/digito-api:${{ github.sha }}
+  IT_DOCKER_IMAGE_NAME: jtalk/digito-api:${{ github.sha }}
   PYTHON_VERSION: 3.7
   
 jobs:
@@ -34,6 +35,7 @@ jobs:
         working-directory: digito-api
         run: |
           docker build -t "$DOCKER_REVISION_TAG" .
+          python -m nose2 it
       - name: Push current artefact
         run: |
           docker push "$DOCKER_REVISION_TAG"
@@ -85,11 +87,12 @@ jobs:
     name: Verify deployment
     runs-on: ubuntu-latest
     needs: deploy
+    env:
+      APP_HOSTNAME: https://digito.jtalk.me
     steps:
-      - name: Verify the healthcheck URL
+      - name: Verify the deployment
         run: |
-          RESULT=$(curl https://digito.jtalk.me/api/health)
-          [ "$RESULT" == "OK" ]
+          python -m nose2 postdeploy
     
         
         
