@@ -4,14 +4,10 @@ from unittest import TestCase
 import requests
 from waiting import wait
 
-_APP_HOST_ENV_VAR = 'APP_HOSTNAME'
-_API_URL_SUFFIX_ENV_VAR = 'API_URL_SUFFIX'
+_API_URL_ENV_VAR = 'API_URL'
 
-_APP_HOST = os.getenv(_APP_HOST_ENV_VAR)
-_API_URL_SUFFIX = os.getenv(_API_URL_SUFFIX_ENV_VAR, '/api')
-
-_API_URL = '%s%s' % (_APP_HOST, _API_URL_SUFFIX)
-_ORIGIN_HOST = _APP_HOST.split('//', 1)[1]
+_API_URL = os.getenv(_API_URL_ENV_VAR)
+_ORIGIN_HOST = _API_URL.split('//', 1)[1].split('/', 1)[0] if _API_URL is not None else None
 
 _SCRIPT_LOCATION = os.path.dirname(os.path.abspath(__file__))
 
@@ -46,7 +42,7 @@ class IntegrationTest(TestCase):
 
     @classmethod
     def setUpClass(cls):
-        assert _APP_HOST is not None, 'Application URL host must be supplied with %s' % _APP_HOST_ENV_VAR
+        assert _API_URL is not None, 'Application URL host must be supplied with %s' % _API_URL_ENV_VAR
 
     def test_requests(self):
         _wait_service_up()
