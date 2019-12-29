@@ -36,7 +36,7 @@ spec:
           resources:
             limits:
               cpu: 100m
-              memory: 100M
+              memory: 80M
             requests:
               cpu: 10m
               memory: 50M
@@ -47,7 +47,7 @@ spec:
               path: /
               port: 80
           livenessProbe:
-            failureThreshold: 1
+            failureThreshold: 2
             httpGet: 
               path: /
               port: 80
