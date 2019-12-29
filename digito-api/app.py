@@ -18,10 +18,6 @@ log = logging.getLogger('app')
 
 print('Starting app...')
 
-# Making sure our neural network is intact
-recognition.check()
-
-
 @app.route('/')
 def index():
     return redirect(UI_LOCATION[0])

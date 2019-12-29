@@ -3,8 +3,8 @@ import os
 
 import cv2
 
-from net import Net, train_mnist
 from image import convert_colour, from_binary
+from net import Net, train_mnist
 
 _LOCATION = os.path.dirname(os.path.abspath(__file__))
 
@@ -32,21 +32,24 @@ def check():
     _get_network()
 
 
-def prepare():
+def preload():
+    global _DLNETWORK_CACHE
+    log.info('Loading the network')
+    _DLNETWORK_CACHE = Net(_MODEL_YAML_NAME, _WEIGHTS_NAME)
+    log.info('The network was successfully loaded')
+
+
+def train():
     net = Net()
     net = train_mnist(net)
     net.save(_MODEL_YAML_NAME, _WEIGHTS_NAME)
 
 
 def _get_network():
-    log.debug('Getting a network instance')
     global _DLNETWORK_CACHE
+    log.debug('Getting a network instance')
     if _DLNETWORK_CACHE is None:
-        log.info('No pre-cached network found, loading a new one')
-        _DLNETWORK_CACHE = Net(_MODEL_YAML_NAME, _WEIGHTS_NAME)
-        log.info('The network was successfully loaded')
-    else:
-        log.debug('Returning a pre-cached instance of the network')
+        preload()
     return _DLNETWORK_CACHE
 
 

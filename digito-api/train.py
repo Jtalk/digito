@@ -9,5 +9,5 @@ import recognition
 log = logging.getLogger('train')
 
 log.info('Training the neural network model')
-recognition.prepare()
+recognition.train()
 log.info('The model is successfully trained')

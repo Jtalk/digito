@@ -1,8 +1,8 @@
 import logging
 
 import cv2
-import numpy
 import keras
+import numpy
 from keras import Sequential
 from keras.datasets import mnist
 from keras.engine.saving import model_from_yaml
