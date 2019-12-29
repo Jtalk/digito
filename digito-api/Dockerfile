@@ -1,10 +1,13 @@
 FROM python:3.7
+
 RUN pip install --upgrade pip
 RUN pip install 'gunicorn>=20.0.0,<21.0.0'
 COPY requirements.txt ./
+RUN pip install -r requirements.txt
+
 COPY model/ model/
 COPY *.py ./
-RUN pip install -r requirements.txt
+
 ENV LOGGER_LEVEL=INFO
 ENV VERBOSE=0
 RUN pip freeze
