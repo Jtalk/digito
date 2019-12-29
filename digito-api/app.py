@@ -3,7 +3,6 @@ import logconf
 logconf.init_logs()
 
 import os
-import sys
 import logging
 
 from flask import Flask, request, redirect
@@ -18,6 +17,9 @@ cors = CORS(app)
 log = logging.getLogger('app')
 
 print('Starting app...')
+
+# Making sure our neural network is intact
+recognition.check()
 
 
 @app.route('/')
@@ -40,10 +42,3 @@ def recognise():
 def health():
     recognition.check()
     return 'OK'
-
-
-
-@app.cli.command()
-def prepare():
-    recognition.prepare()
-    log.info('The model is successfully trained')
