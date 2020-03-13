@@ -88,7 +88,7 @@ class App extends Component {
             return response.text;
         } catch (e) {
             console.error("Exception while uploading a new photo", e);
-            alert('Cannot connect to the server');
+            alert('Error connecting to the server: ' + e.message);
         }
     }
 
