@@ -69,8 +69,8 @@ class App extends Component {
 
     async submitImage() {
         this.setState({digit: undefined, loading: true});
-        let imgsrc = this.canvas.toDataURL('image/bmp');
-        console.debug('Image extracted from the canvas', imgsrc);
+        let imgsrc = this.canvas.toDataURL('image/png');
+        console.debug('Image extracted from the canvas: size=', imgsrc.length, 'content=', imgsrc.substr(0, 20));
         let blob = toBlob(imgsrc);
         let result = await this._recogniseImage(blob);
         console.log(`The image was recognised as ${result}`);
