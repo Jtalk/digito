@@ -70,17 +70,19 @@ class App extends Component {
     async submitImage() {
         this.setState({digit: undefined, loading: true});
         let imgsrc = this.canvas.toDataURL('image/bmp');
+        console.debug('Image extracted from the canvas', imgsrc);
         let blob = toBlob(imgsrc);
         let result = await this._recogniseImage(blob);
         console.log(`The image was recognised as ${result}`);
         this.setState({digit: result, loading: false})
     }
 
-    async _recogniseImage(base64Image) {
+    async _recogniseImage(imageBlob) {
         try {
             console.log(`Uploading image`);
+            console.debug('Image data:', imageBlob);
             let response = await request.post("/recognise")
-                .attach('image', base64Image)
+                .attach('image', imageBlob)
                 .use(api);
             await apiDelay();
             return response.text;
