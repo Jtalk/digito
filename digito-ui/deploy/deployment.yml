@@ -10,7 +10,7 @@ spec:
     matchLabels:
       app: digito
       type: ui
-  replicas: 4
+  replicas: 2
   progressDeadlineSeconds: 120
   revisionHistoryLimit: 3
   strategy:
