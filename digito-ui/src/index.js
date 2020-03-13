@@ -5,7 +5,7 @@ import 'semantic-ui-css/semantic.css';
 import {App} from './App';
 import * as serviceWorker from './serviceWorker';
 import ErrorBoundary from "react-error-boundary";
-import ErrorPage from "./error/error-page";
+import {ErrorPage} from "./error/error-page";
 
 ReactDOM.render(
     <ErrorBoundary FallbackComponent={ErrorPage} onError={e => console.error('Error while rendering', e)}>
