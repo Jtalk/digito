@@ -12,7 +12,7 @@ export class FooterImpl extends React.Component {
                     <FlatLinksList links={this.props.links} separator="|"/>
                 </Segment>
                 <Segment inverted basic textAlign={'center'}>
-                    Copyright 2019 Roman Nazarenko
+                    Copyright 2019-2020 Roman Nazarenko
                 </Segment>
             </Container>
         </Segment>
