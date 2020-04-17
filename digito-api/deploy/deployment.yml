@@ -24,6 +24,16 @@ spec:
         app: digito
         type: api
     spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app: digito
+                    type: api
+                topologyKey: kubernetes.io/hostname
+              weight: 100
       containers:
         - name: digito-api
           image: jtalk/digito-api:[[IMAGE_TAG]]
