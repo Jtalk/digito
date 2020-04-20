@@ -64,7 +64,7 @@ jobs:
       - name: Deploy to Kubernetes
         uses: jtalk/k8s-deploy@v2
         with:
-          namespace: home-staging
+          namespace: digito
           manifests: |
             digito-ui/deploy/deployment.yml
             digito-ui/deploy/service.yml
