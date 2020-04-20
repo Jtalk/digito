@@ -4,7 +4,6 @@ on: [push]
 
 env:
   DOCKER_IMAGE: jtalk/digito-ui
-  DOCKER_REVISION_TAG: jtalk/digito-ui:${{ github.sha }}
   NODE_VERSION: 12.x
   NODE_ENV: production
   CI: true
