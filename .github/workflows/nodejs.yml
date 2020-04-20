@@ -66,9 +66,9 @@ jobs:
         with:
           namespace: home-staging
           manifests: |
-            digito-ui/deploy/deployment.yaml
-            digito-ui/deploy/service.yaml
-            digito-ui/deploy/ingress.yaml
+            digito-ui/deploy/deployment.yml
+            digito-ui/deploy/service.yml
+            digito-ui/deploy/ingress.yml
           images: ${{ env.DOCKER_IMAGE }}:${{ github.sha }}
   verify:
     name: Verify deployment
