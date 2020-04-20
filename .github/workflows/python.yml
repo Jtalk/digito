@@ -4,8 +4,6 @@ on: [push]
 
 env:
   DOCKER_IMAGE: jtalk/digito-api
-  DOCKER_REVISION_TAG: jtalk/digito-api:${{ github.sha }}
-  IT_DOCKER_IMAGE_NAME: jtalk/digito-api:${{ github.sha }}
   PYTHON_VERSION: 3.7
   
 jobs:
@@ -26,64 +24,46 @@ jobs:
           source .env/bin/activate
           pip install -I -r requirements-dev.txt
           python -m nose2 tests
+      - name: Build and push Docker images
+        uses: docker/build-push-action@v1.0.1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          path: digito-api
+          repository: ${{ env.DOCKER_IMAGE }}
+          tags: ${{ github.sha }}
+          tag_with_ref: true
+          tag_with_sha: false
+          push: true
       - name: Docker Login
         uses: Azure/docker-login@v1
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      - name: Build docker image
-        working-directory: digito-api
-        run: |
-          docker build -t "$DOCKER_REVISION_TAG" .
-          pip install -r requirements-dev.txt
-          python -m nose2 it
-      - name: Push current artefact
-        run: |
-          docker push "$DOCKER_REVISION_TAG"
-      - name: Push branch artefact
-        if: github.ref != null
-        run: |
-          export BRANCH_NAME="${GITHUB_REF#refs/heads/}"
-          docker tag "$DOCKER_REVISION_TAG" "$DOCKER_IMAGE:$BRANCH_NAME"
-          docker push "$DOCKER_IMAGE:$BRANCH_NAME"
-      - name: Push as latest
-        if: github.ref == 'refs/heads/master'
-        run: |
-          docker tag "$DOCKER_REVISION_TAG" "$DOCKER_IMAGE:latest"
-          docker push "$DOCKER_IMAGE:latest"
+   
   deploy:
     name: Deploy to Kubernetes
     runs-on: ubuntu-latest
     needs: build-release
     if: github.ref == 'refs/heads/master'
-    env:
-      KUBE_NS: digito
     steps:
       - uses: actions/checkout@v1
-      - name: Load Kubernetes config
-        env:
-          DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DO_TOKEN }}
-        run: |
-          mkdir $HOME/.kube
-          docker run --rm \
-            -e "DIGITALOCEAN_ACCESS_TOKEN=$DIGITALOCEAN_ACCESS_TOKEN" \
-            digitalocean/doctl kubernetes cluster kubeconfig show ${{ secrets.DO_K8S_CLUSTER_NAME }} \
-            > $HOME/.kube/config
-      - name: Deploy to Kubernetes
-        working-directory: digito-api/deploy
-        run: |
-            # Good ol' kubernetes, still unable to figure image tags out on its own in 2019...
-            # Also all this [[][[][]][[][]] is because Sed is kind of a retard when it comes to brackets.
-            sed -i -- 's/[[][[]IMAGE_TAG[]][]]/${{ github.sha }}/' deployment.yml
-            # Fix namespace
-            kubectl config set-context --current --namespace=$KUBE_NS
-            # It's faster to deploy manually than to be figuring out all the Azure k8s-deploy's
-            # idiosyncrasies one by one tbh.
-            kubectl apply -f deployment.yml
-            kubectl apply -f service.yml
-            kubectl apply -f ingress.yml
-            # Waiting for the rollout
-            kubectl rollout status -w --timeout=3m -f deployment.yml
+      - name: Authenticate with the cluster
+        uses: Azure/k8s-set-context@v1
+        with:
+          method: service-account
+          k8s-url: ${{ secrets.CLUSTER_URL }}
+          k8s-secret: ${{ secrets.CLUSTER_ACCOUNT_SECRET }}
+      - name: Deploy API to Kubernetes
+        uses: jtalk/k8s-deploy@v2
+        with:
+          namespace: digito
+          manifests: |
+            digito-api/deploy/deployment.yml
+            digito-api/deploy/service.yml
+            digito-api/deploy/ingress.yml
+          images: ${{ env.DOCKER_IMAGE }}:${{ github.sha }}
+    
   verify:
     name: Verify deployment
     runs-on: ubuntu-latest
