@@ -45,10 +45,10 @@ spec:
                 optional: no
           resources:
             limits:
-              memory: 400M
+              memory: 500M
             requests:
               cpu: 100m
-              memory: 350M
+              memory: 500M
           startupProbe:
             periodSeconds: 10
             failureThreshold: 6
