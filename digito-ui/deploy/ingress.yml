@@ -1,4 +1,4 @@
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: digito-ui
@@ -19,6 +19,9 @@ spec:
       http:
         paths:
         - path: /(.*)
+          pathType: ImplementationSpecific
           backend:
-            serviceName: digito-ui
-            servicePort: 80
+            service:
+              name: digito-ui
+              port:
+                number: 80
