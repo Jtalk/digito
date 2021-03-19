@@ -23,7 +23,7 @@ networkx==2.4
 numpy==1.18.3
 opencv-python==4.2.0.34
 opt-einsum==3.2.1
-Pillow==7.1.0
+Pillow==8.1.1
 protobuf==3.11.3
 pyparsing==2.4.7
 python-dateutil==2.8.1
