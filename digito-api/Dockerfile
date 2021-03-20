@@ -1,9 +1,10 @@
-FROM python:3.7
+FROM python:3.8
 
 RUN pip install --upgrade pip
-RUN pip install 'gunicorn>=20.0.0,<21.0.0'
-COPY requirements.txt ./
-RUN pip install -r requirements.txt
+RUN pip install --user pipenv
+COPY Pipenv ./
+COPY Pipenv.lock ./
+RUN pipenv sync
 
 COPY model/ model/
 COPY *.py ./
@@ -13,4 +14,4 @@ ENV VERBOSE=0
 RUN pip freeze
 # ENV UI_LOCATION=depends on deployment
 # ENV LOGGER_FORMAT=see logconf.py
-CMD ["gunicorn", "--workers=2", "--threads=1", "--worker-class=gthread", "--log-file=-", "--bind=0.0.0.0:80", "--preload", "app:app"]
+CMD ["pipenv", "run", "start"]

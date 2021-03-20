@@ -6,6 +6,7 @@ name = "pypi"
 [scripts]
 dev = "flask run --reload -p 4000"
 tests = "python -m nose2 tests"
+postdeploy = "python -m nose2 postdeploy"
 start = "gunicorn --workers=2 --threads=1 --worker-class=gthread --log-file=- --bind=0.0.0.0:80 --preload app:app"
 
 [packages]

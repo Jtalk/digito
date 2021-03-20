@@ -4,8 +4,8 @@ on: [push]
 
 env:
   DOCKER_IMAGE: jtalk/digito-api
-  PYTHON_VERSION: 3.7
-  
+  PYTHON_VERSION: 3.8
+
 jobs:
   build-release:
     name: Build and Release
@@ -19,11 +19,9 @@ jobs:
       - name: Build app
         working-directory: digito-api
         run: |
-          pip install --upgrade pip
-          python -m venv .env
-          source .env/bin/activate
-          pip install -I -r requirements-dev.txt
-          python -m nose2 tests
+          pip install --user pipenv
+          pipenv sync --dev
+          pipenv run tests
       - name: Build and push Docker images
         uses: docker/build-push-action@v1.0.1
         with:
@@ -35,7 +33,7 @@ jobs:
           tag_with_ref: true
           tag_with_sha: false
           push: true
-   
+
   deploy:
     name: Deploy to Kubernetes
     runs-on: ubuntu-latest
@@ -58,7 +56,7 @@ jobs:
             digito-api/deploy/service.yml
             digito-api/deploy/ingress.yml
           images: ${{ env.DOCKER_IMAGE }}:${{ github.sha }}
-    
+
   verify:
     name: Verify deployment
     runs-on: ubuntu-latest
@@ -74,22 +72,23 @@ jobs:
       - name: Verify the deployment
         working-directory: digito-api
         run: |
-          pip install -r requirements-dev.txt
-          python -m nose2 postdeploy
-    
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-     
+          pip install --user pipenv
+          pipenv sync --dev
+          pipenv run postdeploy
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
