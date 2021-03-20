@@ -3,7 +3,13 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 name = "pypi"
 
+[scripts]
+dev = "flask run --reload -p 4000"
+tests = "python -m nose2 tests"
+start = "gunicorn --workers=2 --threads=1 --worker-class=gthread --log-file=- --bind=0.0.0.0:80 --preload app:app"
+
 [packages]
+gunicorn = ">=20"
 matplotlib = ">=3.2.1,<4"
 opencv-python = ">=4,<5"
 scikit-image = ">=0.16.2"
