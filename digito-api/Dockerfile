@@ -1,9 +1,9 @@
 FROM python:3.8
 
 RUN pip install --upgrade pip
-RUN pip install --user pipenv
-COPY Pipenv ./
-COPY Pipenv.lock ./
+RUN pip install pipenv
+COPY Pipfile ./
+COPY Pipfile.lock ./
 RUN pipenv sync
 
 COPY model/ model/
