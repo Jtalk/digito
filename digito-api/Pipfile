@@ -21,6 +21,11 @@ Markdown = ">=3.2.1,<4"
 Werkzeug = ">=0.16.0"
 
 [dev-packages]
+coverage = ">=5.1"
+mock = ">=3.0.5,<4"
+nose2 = ">=0.9.2,<1"
+requests = ">=2.23.0,<3"
+waiting = ">=1.4.1,<2"
 
 [requires]
 python_version = "3.8"
