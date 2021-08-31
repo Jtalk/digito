@@ -23,7 +23,7 @@ env:
 
 jobs:
   build-release-ui:
-    name: Build and Release to Docker
+    name: Build and Release UI to Docker
     runs-on: ubuntu-latest
     env:
       PUBLIC_URL: ""
@@ -60,7 +60,7 @@ jobs:
           push: ${{ github.ref == 'refs/heads/master' }}
 
   build-release-api:
-    name: Build and Release
+    name: Build and Release API to Docker
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -125,7 +125,7 @@ jobs:
           wait-for-completion-interval: 30s
 
   verify-ui:
-    name: Verify deployment
+    name: Verify UI deployment
     runs-on: ubuntu-latest
     needs:
       - deploy
@@ -135,7 +135,7 @@ jobs:
           curl --fail https://digito.jtalk.me/
 
   verify-api:
-    name: Verify deployment
+    name: Verify API deployment
     runs-on: ubuntu-latest
     needs:
       - deploy
