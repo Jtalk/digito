@@ -2,8 +2,24 @@ apiVersion: v1
 entries:
   jtalk-digito:
   - apiVersion: v2
+    appVersion: 400cf86c856ac185e8579881d7e9cec33e09a24b
+    created: "2021-08-31T15:14:11.153560566Z"
+    description: A Helm chart for Digito Recogniser
+    digest: e5018d4d61122ef1c08765286996b908aaa9e5907e1acfa9a7be2017907ff94a
+    home: https://digito.jtalk.me
+    maintainers:
+    - email: me+digito-helm@jtalk.me
+      name: Roman Nazarenko
+    name: jtalk-digito
+    sources:
+    - https://github.com/Jtalk/digito
+    type: application
+    urls:
+    - https://Jtalk.github.io/digito/helm/jtalk-digito-1.0.0-400cf86c856ac185e8579881d7e9cec33e09a24b.tgz
+    version: 1.0.0-400cf86c856ac185e8579881d7e9cec33e09a24b
+  - apiVersion: v2
     appVersion: 21ebc80cb5094d3b093d1bb8c5ac1c6703fc1e10
-    created: "2021-08-31T15:02:59.331976482Z"
+    created: "2021-08-31T15:14:11.152242085Z"
     description: A Helm chart for Digito Recogniser
     digest: 3020d77f7edcceabcc32706ec8fd01fb1179da39dd722f7bbe629529ab6a6417
     home: https://digito.jtalk.me
@@ -17,4 +33,4 @@ entries:
     urls:
     - https://Jtalk.github.io/digito/helm/jtalk-digito-1.0.0-21ebc80cb5094d3b093d1bb8c5ac1c6703fc1e10.tgz
     version: 1.0.0-21ebc80cb5094d3b093d1bb8c5ac1c6703fc1e10
-generated: "2021-08-31T15:02:59.33016387Z"
+generated: "2021-08-31T15:14:11.150765395Z"
