@@ -1,0 +1,27 @@
+Copyright 2019 Roman Nazarenko <me@jtalk.me>
+
+Digito is licenced under GNU Affero General Public Licence version 3,
+except the following parts:
+- React Canvas Draw: MIT licence, https://github.com/embiem/react-canvas-draw
+
+Digito is a Keras-powered digit recognition backend with a single-page React UI. 
+
+It's a pre-trained convolutional neural network with 3 conv layers and 1 extra full-conn. Deeper networks collapse without residual/inception blocks, but resnet/googlenet quickly overfit MNIST without augmentation. Data augmentation to the level overfitting stops has proven to be too computationally expensive. We're preparing data in order to avoid the network overfitting on unrelated features (like line thickness and position). 
+
+We do some data preprocessing before feeding data to the network:
+- Threshold binarisation
+- Cropping (make any digit take the entire 28x28 space)
+- Padding (visual feature for human convenience, has no effect on network's learning).
+Some further preprocessing steps have been proven successful, but have not yet made it into this implementation:
+- Cropping whilst preserving proportions (keeps 1 and 7 in one piece): while making it easier for humans to analyse, makes little difference for the network as broken proportions affect all the 1s, effectively changing network's preception of 1. 
+
+Layers trivia:
+- We're using 4x4 kernels for the first layer. 3x3 is too small for digits with thick lines: the networks starts to miss features. Even kernel allows us to avoid central pixel taking charge of the convolution, effectively smoothing the features.
+- We're using 9x9 kernels for subsequent layers. They have shown the best feature detection capabilities during batch testing.
+- We're using batch normalisation as it's shown better regularisation effect for convnets than dropouts. 
+- We're still using dropout for the fullconn layer. Batch-norm there improves error rate on the training set, but ultimately hurts variance. 
+
+See link for the full research: https://www.wolframcloud.com/objects/mewolfram0/Published/Classify%20MNIST
+
+These are alternative approaches worth mentioning:
+- A residual network with data augmentation (more precision, but much trickier and longer to train): https://www.wolframcloud.com/objects/mewolfram0/Published/Classify%20MNIST%20Residual%20Augmented
