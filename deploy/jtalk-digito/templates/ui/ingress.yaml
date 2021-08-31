@@ -1,0 +1,14 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ quote .Values.ui.name }}
+  labels:
+    app: {{ quote .Values.name }}
+    type: {{ quote .Values.ui.type }}
+  {{- include "digito.ingress.annotations" .Values.ui | indent 2 }}
+
+spec:
+  {{- $ruleService := merge (dict) .Values.ui.service (dict "name" .Values.ui.name) }}
+  {{- $rulesValues := merge (dict) .Values (dict "service" $ruleService) }}
+  {{- include "digito.ingress.tls" .Values | indent 2 }}
+  {{- include "digito.ingress.rules" $rulesValues | indent 2 }}

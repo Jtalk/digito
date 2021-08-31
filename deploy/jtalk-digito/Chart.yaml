@@ -1,0 +1,16 @@
+apiVersion: v2
+name: jtalk-digito
+description: A Helm chart for Digito Recogniser
+
+type: application
+
+version: 1.0.0
+appVersion: "initial"
+
+home: https://digito.jtalk.me
+sources:
+  - https://github.com/Jtalk/digito
+
+maintainers:
+  - name: Roman Nazarenko
+    email: me+digito-helm@jtalk.me

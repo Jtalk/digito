@@ -1,0 +1,12 @@
+{{- define "digito.deployment.affinity" }}
+affinity:
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+    - podAffinityTerm:
+        labelSelector:
+          matchLabels:
+            app: {{ quote .name }}
+            type: {{ quote .type }}
+        topologyKey: {{ quote .topologyKey }}
+      weight: {{ .weight }}
+{{- end }}

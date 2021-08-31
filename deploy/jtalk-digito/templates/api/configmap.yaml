@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ quote .Values.api.name }}
+data:
+  {{- $origins := dict "value" (list) -}}
+  {{- range $domain := .Values.domains }}
+    {{- $noop := printf "https://%s" $domain | append $origins.value | set $origins "value" -}}
+  {{- end }}
+  {{- if .Values.api.cors.localhostPort }}
+    {{- $noop := printf "https://localhost:%.0f" .Values.api.cors.localhostPort | append $origins.value | set $origins "value" -}}
+  {{- end }}
+  LOGGER_LEVEL: INFO
+  UI_LOCATION: {{ join "," $origins.value | quote }}

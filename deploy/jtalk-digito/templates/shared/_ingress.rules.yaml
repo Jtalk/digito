@@ -1,0 +1,17 @@
+{{- define "digito.ingress.rule" }}
+- host: {{ quote .domain }}
+  http:
+    paths:
+      - path: {{ printf "%s/(.*)" .basePath | quote }}
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: {{ quote .service.name }}
+            port:
+              number: {{ .service.port }}
+{{- end }}
+
+{{- define "digito.ingress.rules" }}
+rules:
+  {{- include "digito.ingress.each-domain" (merge (dict) . (dict "each" "digito.ingress.rule")) | indent 2 }}
+{{- end }}

@@ -1,0 +1,6 @@
+{{- define "digito.service.ports" }}
+ports:
+  - name: http
+    port: {{ .service.port }}
+    targetPort: {{ .deployment.port }}
+{{- end }}

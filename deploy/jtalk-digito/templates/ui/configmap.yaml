@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ quote .Values.ui.name }}
+data:
+  NODE_ENV: production
+  REACT_APP_API_LOCATION: {{ printf "https://%s%s" (mustFirst .Values.domains) .Values.api.basePath | quote }}

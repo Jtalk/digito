@@ -1,0 +1,70 @@
+name: digito
+domains:
+  - digito.jtalk.me
+basePath: ""
+
+ui:
+  type: ui
+  name: digito-ui
+  service:
+    port: 80
+  deployment:
+    port: 80
+    image:
+      name: jtalk/digito-ui
+      version: latest
+    replicas: 2
+    rollingUpdate:
+      maxSurge: 50%
+      maxUnavailable: 50%
+    affinity:
+      weight: 100
+      topologyKey: kubernetes.io/hostname
+    probes:
+      startup:
+        periodSeconds: 5
+        failureThreshold: 6
+      liveness:
+        path: /
+        failureThreshold: 2
+    resources:
+      limits:
+        memory: 80M
+      requests:
+        cpu: 50m
+        memory: 80M
+
+api:
+  type: api
+  name: digito-api
+  basePath: /api
+  cors:
+    localhostPort: 8060
+  service:
+    port: 80
+  deployment:
+    port: 80
+    image:
+      name: jtalk/digito-api
+      version: latest
+    replicas: 1
+    rollingUpdate:
+      maxSurge: 100%
+      maxUnavailable: 50%
+    affinity:
+      weight: 100
+      topologyKey: kubernetes.io/hostname
+    probes:
+      startup:
+        periodSeconds: 10
+        failureThreshold: 6
+      liveness:
+        path: /health
+        failureThreshold: 1
+        timeoutSeconds: 5
+    resources:
+      limits:
+        memory: 500M
+      requests:
+        cpu: 100m
+        memory: 500M

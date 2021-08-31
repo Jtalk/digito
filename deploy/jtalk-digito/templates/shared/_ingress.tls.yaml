@@ -1,0 +1,16 @@
+{{- define "digito.ingress.tls.host" }}
+- hosts:
+  - {{ .domain | quote }}
+  secretName: {{ printf "%s-certificate" .domain | quote }}
+{{- end }}
+
+{{- define "digito.ingress.each-domain" }}
+  {{- range $domain := .domains }}
+    {{- include $.each (merge (dict) $ (dict "domain" $domain)) | indent 2}}
+  {{- end }}
+{{- end }}
+
+{{- define "digito.ingress.tls" }}
+tls:
+  {{- include "digito.ingress.each-domain" (merge (dict) . (dict "each" "digito.ingress.tls.host")) | indent 2 }}
+{{- end }}

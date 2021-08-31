@@ -1,0 +1,3 @@
+{{- define "digito.container.image" }}
+{{- .name }}:{{ .version }}
+{{- end }}
