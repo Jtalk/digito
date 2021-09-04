@@ -39,7 +39,7 @@ api:
   name: digito-api
   basePath: /api
   cors:
-    localhostPort: 8060
+    localhostPort: 3000
   service:
     port: 80
   deployment:
