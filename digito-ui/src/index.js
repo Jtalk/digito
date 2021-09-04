@@ -4,7 +4,7 @@ import './index.css';
 import 'semantic-ui-css/semantic.css';
 import {App} from './App';
 import * as serviceWorker from './serviceWorker';
-import ErrorBoundary from "react-error-boundary";
+import {ErrorBoundary} from "react-error-boundary";
 import {ErrorPage} from "./error/error-page";
 
 ReactDOM.render(

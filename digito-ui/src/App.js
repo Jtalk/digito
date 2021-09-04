@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useRef, useState} from 'react';
 import './utils/config';
 import * as request from 'superagent';
 import {Button, Grid, Header, Segment} from "semantic-ui-react";
@@ -15,13 +15,14 @@ export const App = function () {
     let [digit, setDigit] = useState(null);
     let [loading, setLoading] = useState(false);
 
-    let canvas;
+    let canvasRef = useRef();
 
-    async function submitImage() {
+    const submitImage = useCallback(async () => {
+        if (!canvasRef.current) return;
         setDigit(null);
         setLoading(true);
         try {
-            let imgsrc = canvas.toDataURL('image/png');
+            let imgsrc = canvasRef.current.toDataURL('image/png');
             console.debug('Image extracted from the canvas: size=', imgsrc.length, 'content=', imgsrc.substr(0, 20));
             let blob = toBlob(imgsrc);
             let result = await recogniseImage(blob);
@@ -30,16 +31,16 @@ export const App = function () {
         } finally {
             setLoading(false);
         }
-    }
+    }, []);
 
-    let clear = () => {
+    const clear = useCallback(() => {
         try {
-            canvas.clear();
+            canvasRef.current?.clear?.();
             setDigit(undefined);
         } catch (e) {
             console.error('Error while clearing the canvas', e);
         }
-    };
+    }, []);
 
     return <div className="main-content-pushable">
         <MenuBar/>
@@ -47,7 +48,7 @@ export const App = function () {
             <div className={'drawing-column'}>
                 <Header as={'h2'}>Draw a digit below</Header>
                 <Segment compact textAlign={'center'} className={'centred drawing'} size={'large'}>
-                    <CanvasDraw ref={cd => (canvas = cd)}
+                    <CanvasDraw ref={canvasRef}
                                 lazyRadius={0}
                                 brushColor={'black'}
                                 backgroundColor={'white'}
