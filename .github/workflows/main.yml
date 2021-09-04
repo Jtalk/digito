@@ -30,7 +30,7 @@ jobs:
       NODE_ENV: production
       REACT_APP_API_LOCATION: /api
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: Set up Node.JS ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v1
         with:
@@ -63,7 +63,7 @@ jobs:
     name: Build and Release API to Docker
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: Set up Python ${{ env.PYTHON_VERSION }}
         uses: actions/setup-python@v1
         with:
@@ -142,7 +142,7 @@ jobs:
     env:
       API_URL: https://digito.jtalk.me/api
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: Set up Python ${{ env.PYTHON_VERSION }}
         uses: actions/setup-python@v1
         with:
