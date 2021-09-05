@@ -45,10 +45,12 @@ class Net():
             log.info('No .yml file were provided, creating an untrained network')
             self._model = Net._create()
         else:
-            log.info('Loading the existing network from model "%s"' % model_json_file_name)
+            log.info('Loading the existing network from model "%s"' %
+                     model_json_file_name)
             self._model = Net._load_model(model_json_file_name)
             if weights_file_name is not None:
-                log.info('Loading the existing weights from "%s"' % weights_file_name)
+                log.info('Loading the existing weights from "%s"' %
+                         weights_file_name)
                 self._model.load_weights(weights_file_name)
 
     def save(self, model_json_file_name, weights_file_name):
@@ -66,7 +68,8 @@ class Net():
         x_train = _preprocess_images(x_train)
         log.info('Preprocessing a validation set')
         x_test = _preprocess_images(x_test)
-        self._model.fit(x_train, y_train, epochs=10, validation_data=(x_test, y_test), batch_size=64)
+        self._model.fit(x_train, y_train, epochs=10,
+                        validation_data=(x_test, y_test), batch_size=64)
         score = self._model.evaluate(x_test, y_test, verbose=0)
         return score
 
@@ -77,7 +80,8 @@ class Net():
         :return: an int representing the digit recognised.
         """
         assert image_array.shape[3] == 1, \
-            'The images were expected to be grayscale, but had %d channels' % image_array.shape[3]
+            'The images were expected to be grayscale, but had %d channels' % image_array.shape[
+                3]
         log.debug('Preprocessing images before feeding them to the network')
         preprocessed = _preprocess_images(image_array, verbose=verbose)
         log.debug('Image preprocessing complete')
@@ -87,13 +91,15 @@ class Net():
         for result in results:
             digit = result.index(max(result))
             digits.append(digit)
-        log.info('The digits were recognised as %s, data: %s' % (digits, results))
+        log.info('The digits were recognised as %s, data: %s' %
+                 (digits, results))
         return digits
 
     @staticmethod
     def _create():
         model = Sequential()
-        model.add(BatchNormalization(input_shape=(_MNIST_ROWS, _MNIST_COLS, 1)))
+        model.add(BatchNormalization(
+            input_shape=(_MNIST_ROWS, _MNIST_COLS, 1)))
         model.add(Conv2D(filters=32, kernel_size=(4, 4)))
         model.add(BatchNormalization())
         model.add(Activation('relu'))
@@ -141,7 +147,8 @@ def _load_mnist():
     x_train = x_train.astype('float32')
     x_test = x_test.astype('float32')
     log.info('x_train shape: %s', x_train.shape)
-    log.info('%d train samples, %d test samples', x_train.shape[0], x_test.shape[0])
+    log.info('%d train samples, %d test samples',
+             x_train.shape[0], x_test.shape[0])
 
     y_train = to_categorical(y_train)
     y_test = to_categorical(y_test)
@@ -158,7 +165,8 @@ def _preprocess_image(image, index=None, verbose=False):
     cropped = crop_background(binary)
     if verbose and index is not None and index < _VERBOSE_IMAGE_SAVE_LIMIT:
         _save_as('img-cropped-%d.bmp' % index, cropped)
-    resized = resize_grayscale(cropped, (_MNIST_ROWS - _PADDING * 2, _MNIST_COLS - _PADDING * 2))
+    resized = resize_grayscale(
+        cropped, (_MNIST_ROWS - _PADDING * 2, _MNIST_COLS - _PADDING * 2))
     if verbose and index is not None and index < _VERBOSE_IMAGE_SAVE_LIMIT:
         _save_as('img-resized-%d.bmp' % index, resized)
     padded = pad(resized, _PADDING, padding_pixel=1)

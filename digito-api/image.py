@@ -85,7 +85,8 @@ def resize_grayscale(image_array, dims):
 
 def pad(image_array, num_pixels, padding_pixel=1):
     return numpy.pad(image_array,
-                     pad_width=((num_pixels, num_pixels), (num_pixels, num_pixels), (0, 0)),
+                     pad_width=((num_pixels, num_pixels),
+                                (num_pixels, num_pixels), (0, 0)),
                      mode='constant',
                      constant_values=padding_pixel)
 
@@ -110,7 +111,8 @@ def _find_edges(image_array, bg_intensity, sim_threshold):
     transp_array = image_array.transpose(1, 0, 2)
     top = _find_left_edge(transp_array, bg_intensity, sim_threshold)
     inv_transp_array = [reversed(row) for row in transp_array]
-    bottom = - 1 - _find_left_edge(inv_transp_array, bg_intensity, sim_threshold)
+    bottom = - 1 - _find_left_edge(inv_transp_array,
+                                   bg_intensity, sim_threshold)
     return Edges(left, right, top, bottom)
 
 

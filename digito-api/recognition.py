@@ -20,7 +20,8 @@ log = logging.getLogger('recognition')
 def recognise(img):
     img = from_binary(img)
     log.debug('Converting to a grayscale image')
-    img = convert_colour(img, transparency_colour=255, colour=cv2.COLOR_BGRA2GRAY)
+    img = convert_colour(img, transparency_colour=255,
+                         colour=cv2.COLOR_BGRA2GRAY)
     log.debug('Adjusting dimensions for Keras')
     img = _adjust_dimensions(img)
     net = _get_network()
@@ -65,4 +66,5 @@ def _adjust_dimensions(image_array):
     elif shape_len == 3:
         return image_array.reshape(((1, image_array.shape[0], image_array.shape[1], image_array.shape[2])))
     else:
-        raise ValueError('Unsupported image tensor shape %s' % image_array.shape)
+        raise ValueError('Unsupported image tensor shape %s' %
+                         image_array.shape)

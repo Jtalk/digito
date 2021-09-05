@@ -1,14 +1,10 @@
 import logconf
-
-logconf.init_logs()
-
-import os
-import logging
-
-from flask import Flask, request, redirect
-from flask_cors import CORS, cross_origin
-
 import recognition
+import logging
+import os
+
+from flask_cors import CORS, cross_origin
+from flask import Flask, request, redirect
 
 UI_LOCATION = os.getenv('UI_LOCATION', 'http://localhost:3000').split(',')
 
@@ -17,6 +13,7 @@ cors = CORS(app)
 log = logging.getLogger('app')
 
 print('Starting app...')
+
 
 @app.route('/')
 def index():

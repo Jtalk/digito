@@ -1,8 +1,12 @@
 import os
 from logging import config
 
-_FORMAT = os.environ.get('LOGGER_FORMAT', '%(asctime)s [%(levelname)s] (%(name)s): %(message)s')
+_FORMAT = os.environ.get(
+    'LOGGER_FORMAT', '%(asctime)s [%(levelname)s] (%(name)s): %(message)s')
 _LEVEL = os.environ.get('LOGGER_LEVEL', 'INFO')
+
+global _LOGCONF_INIT
+_LOGCONF_INIT = False
 
 
 def init_logs():
@@ -25,3 +29,8 @@ def init_logs():
             'handlers': ['console']
         }
     })
+
+
+if not _LOGCONF_INIT:
+    init_logs()
+    _LOGCONF_INIT = True

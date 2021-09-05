@@ -1,10 +1,7 @@
 import logconf
-
-logconf.init_logs()
-
+import recognition
 import logging
 
-import recognition
 
 log = logging.getLogger('train')
 
