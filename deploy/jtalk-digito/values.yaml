@@ -58,6 +58,7 @@ api:
       startup:
         periodSeconds: 10
         failureThreshold: 6
+        timeoutSeconds: 5
       liveness:
         path: /health
         failureThreshold: 1
