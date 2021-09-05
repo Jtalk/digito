@@ -10,7 +10,7 @@ from flask_cors import CORS, cross_origin
 
 import recognition
 
-UI_LOCATION = os.environ['UI_LOCATION'].split(',')
+UI_LOCATION = os.getenv('UI_LOCATION', 'http://localhost:3000').split(',')
 
 app = Flask(__name__)
 cors = CORS(app)
