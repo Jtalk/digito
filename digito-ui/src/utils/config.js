@@ -1,7 +1,7 @@
 import config from "react-global-configuration";
 
-let API = process.env.REACT_APP_API_LOCATION || "http://localhost:5000";
+const api = process.env.REACT_APP_API_LOCATION || "http://localhost:4000";
 
 config.set({
-    api: API
+    api
 });
