@@ -8,7 +8,7 @@ from net import Net, train_mnist
 
 _LOCATION = os.path.dirname(os.path.abspath(__file__))
 
-_MODEL_YAML_NAME = os.path.join(_LOCATION, 'model', 'model.yml')
+_MODEL_JSON_NAME = os.path.join(_LOCATION, 'model', 'model.json')
 _WEIGHTS_NAME = os.path.join(_LOCATION, 'model', 'weights.h5')
 
 _DLNETWORK_CACHE = None
@@ -33,23 +33,23 @@ def check():
 
 
 def preload():
-    global _DLNETWORK_CACHE
     log.info('Loading the network')
-    _DLNETWORK_CACHE = Net(_MODEL_YAML_NAME, _WEIGHTS_NAME)
+    result = Net(_MODEL_JSON_NAME, _WEIGHTS_NAME)
     log.info('The network was successfully loaded')
+    return result
 
 
 def train():
     net = Net()
     net = train_mnist(net)
-    net.save(_MODEL_YAML_NAME, _WEIGHTS_NAME)
+    net.save(_MODEL_JSON_NAME, _WEIGHTS_NAME)
 
 
 def _get_network():
     global _DLNETWORK_CACHE
     log.debug('Getting a network instance')
     if _DLNETWORK_CACHE is None:
-        preload()
+        _DLNETWORK_CACHE = preload()
     return _DLNETWORK_CACHE
 
 
