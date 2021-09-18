@@ -8,7 +8,7 @@ from keras import Sequential
 from keras.datasets import mnist
 from keras.models import model_from_json
 from keras.layers import Conv2D, BatchNormalization, Activation, MaxPool2D, Flatten, Dense, Dropout
-from keras.utils.np_utils import to_categorical
+from keras.models import load_model
 from keras.optimizer_v1 import SGD
 from numpy import array
 from tqdm import tqdm
@@ -34,30 +34,24 @@ class Net():
     """
     _model: Sequential
 
-    def __init__(self, model_json_file_name=None, weights_file_name=None):
+    def __init__(self, model_path=None, compile=True):
         """
         Initialise the network from the files. If file names were not provided, create an empty default network.
         The empty network must be trained before being calling `recognise`.
-        :param model_json_file_name: a model file name. The weights won't be loaded if this file is omitted.
-        :param weights_file_name: a weights file name. This parameter is only respected if the model file was also provided.
+        :param model_path: a model path to load.
+        :param compile: compile the loaded model, preparing it for training.
         """
-        if model_json_file_name is None:
-            log.info('No .yml file were provided, creating an untrained network')
+        if model_path is None:
+            log.info('No model path was provided, creating an untrained network')
             self._model = Net._create()
         else:
             log.info('Loading the existing network from model "%s"' %
-                     model_json_file_name)
-            self._model = Net._load_model(model_json_file_name)
-            if weights_file_name is not None:
-                log.info('Loading the existing weights from "%s"' %
-                         weights_file_name)
-                self._model.load_weights(weights_file_name)
+                     model_path)
+            self._model = Net._load_model(model_path, compile=compile)
 
-    def save(self, model_json_file_name, weights_file_name):
-        with open(model_json_file_name, 'w') as model_file:
-            json = self._model.to_json()
-            model_file.write(json)
-        self._model.save_weights(weights_file_name)
+    def save(self, model_path):
+        self._model.save(model_path)
+        self._model.save_weights(model_path)
 
     def train(self, x_train, y_train, x_test, y_test):
         """
@@ -122,10 +116,9 @@ class Net():
         return model
 
     @staticmethod
-    def _load_model(model_json_file_name):
-        with open(model_json_file_name, 'r') as model_file:
-            json = model_file.read()
-            return model_from_json(json)
+    def _load_model(model_path, compile=True):
+        model = load_model(model_path, compile=compile)
+        return model
 
 
 def train_mnist(net: Net):

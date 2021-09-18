@@ -7,6 +7,7 @@ from image import convert_colour, from_binary
 from net import Net, train_mnist
 
 _LOCATION = os.path.dirname(os.path.abspath(__file__))
+_MODEL_PATH = os.path.join(_LOCATION, 'model')
 
 _MODEL_JSON_NAME = os.path.join(_LOCATION, 'model', 'model.json')
 _WEIGHTS_NAME = os.path.join(_LOCATION, 'model', 'weights.h5')
