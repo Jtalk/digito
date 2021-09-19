@@ -22,7 +22,7 @@ spec:
       {{- include "digito.deployment.affinity" (merge (dict) .Values.api.deployment.affinity (dict "name" .Values.name "type" .Values.api.type)) | indent 6 }}
       containers:
         - name: {{ quote .Values.api.name }}
-          image: {{- include "digito.container.image" .Values.api.deployment.image | quote | indent 1 }}
+          image: {{ printf "%s:%s" .Values.api.deployment.image.name .Chart.AppVersion | quote }}
           env:
             - name: PORT
               value: {{ quote .Values.api.deployment.port }}

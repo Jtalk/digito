@@ -22,7 +22,7 @@ spec:
       {{- include "digito.deployment.affinity" (merge (dict) .Values.ui.deployment.affinity (dict "name" .Values.name "type" .Values.ui.type)) | indent 6 }}
       containers:
         - name: {{ quote .Values.ui.name }}
-          image: {{- include "digito.container.image" .Values.ui.deployment.image | quote | indent 1 }}
+          image: {{ printf "%s:%s" .Values.ui.deployment.image.name .Chart.AppVersion | quote }}
           envFrom:
             - configMapRef:
                 name: {{ quote .Values.ui.name }}

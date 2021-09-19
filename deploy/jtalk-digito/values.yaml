@@ -12,7 +12,6 @@ ui:
     port: 80
     image:
       name: jtalk/digito-ui
-      version: latest
     replicas: 2
     rollingUpdate:
       maxSurge: 50%
@@ -46,7 +45,6 @@ api:
     port: 80
     image:
       name: jtalk/digito-api
-      version: latest
     replicas: 1
     rollingUpdate:
       maxSurge: 100%
@@ -83,7 +81,6 @@ serving:
     port: 80
     image:
       name: jtalk/digito-serving
-      version: latest
     replicas: 2
     rollingUpdate:
       maxSurge: 50%
