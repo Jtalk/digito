@@ -10,11 +10,8 @@ from keras.models import load_model
 from keras.optimizer_v1 import SGD
 from keras.utils.np_utils import to_categorical
 
+from config import MNIST_ROWS, MNIST_COLS, PADDING
 from image import preprocess
-
-MNIST_ROWS = 28
-MNIST_COLS = 28
-PADDING = 3
 
 log = logging.getLogger('net')
 
@@ -68,18 +65,10 @@ class Net():
         """
         Recognise digits presented in the array
         :param image_array: an nparray of grayscale digit images, intensity 0..255
-        :return: an int representing the digit recognised.
+        :return: The list of predictions for further classification (see recognition.py)
         """
-        verify(image_array)
-        results = self._model.predict(image_array, verbose=verbose).tolist()
-        log.debug('Prediction is done, interpreting the output')
-        digits = []
-        for result in results:
-            digit = result.index(max(result))
-            digits.append(digit)
-        log.info('The digits were recognised as %s, data: %s' %
-                 (digits, results))
-        return digits
+        return self._model.predict(image_array, verbose=verbose).tolist()
+
 
     @staticmethod
     def _create():
@@ -117,22 +106,6 @@ def train_mnist(net: Net):
     x_train, y_train, x_test, y_test = _load_mnist()
     net.train(x_train, y_train, x_test, y_test)
     return net
-
-
-def verify(image_array):
-    assert image_array.shape[3] == 1, \
-        'The images were expected to be grayscale, but had %d channels' % image_array.shape[
-            3]
-
-
-def classify(results):
-    digits = []
-    for result in results:
-        digit = result.index(max(result))
-        digits.append(digit)
-    log.info('The digits were recognised as %s, data: %s' %
-             (digits, results))
-    return digits
 
 
 def _load_mnist():

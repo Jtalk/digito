@@ -4,8 +4,8 @@ import os
 import cv2
 
 from client import TensorflowClient
+from config import MNIST_ROWS, MNIST_COLS, PADDING
 from image import convert_colour, from_binary, preprocess, adjust_dimensions
-from net import Net, train_mnist, MNIST_COLS, MNIST_ROWS, PADDING, classify, verify
 
 _LOCATION = os.path.dirname(os.path.abspath(__file__))
 _MODEL_PATH = os.path.join(_LOCATION, 'model')
@@ -41,6 +41,23 @@ class Recognition:
 
 
 def train():
+    from net import Net, train_mnist
     net = Net()
     net = train_mnist(net)
     net.save(_MODEL_PATH)
+
+
+def verify(image_array):
+    assert image_array.shape[3] == 1, \
+        'The images were expected to be grayscale, but had %d channels' % image_array.shape[
+            3]
+
+
+def classify(results):
+    digits = []
+    for result in results:
+        digit = result.index(max(result))
+        digits.append(digit)
+    log.info('The digits were recognised as %s, data: %s' %
+             (digits, results))
+    return digits
