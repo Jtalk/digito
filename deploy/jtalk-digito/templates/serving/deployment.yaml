@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ quote .Values.name }}
+    type: {{ quote .Values.serving.type }}
+  name: {{ quote .Values.serving.name }}
+spec:
+  replicas: {{ .Values.serving.deployment.replicas }}
+  selector:
+    matchLabels:
+      app: {{ quote .Values.name }}
+      type: {{ quote .Values.serving.type }}
+  strategy:
+    {{- dict "type" "RollingUpdate" "rollingUpdate" .Values.serving.deployment.rollingUpdate | toYaml | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        app: {{ quote .Values.name }}
+        type: {{ quote .Values.serving.type }}
+    spec:
+      {{- include "digito.deployment.affinity" (merge (dict) .Values.serving.deployment.affinity (dict "name" .Values.name "type" .Values.serving.type)) | indent 6 }}
+      containers:
+        - name: {{ quote .Values.serving.name }}
+          image: {{- include "digito.container.image" .Values.serving.deployment.image | quote | indent 1 }}
+          env:
+            - name: PORT
+              value: {{ quote .Values.serving.deployment.port }}
+          envFrom:
+            - configMapRef:
+                name: {{ quote .Values.serving.name }}
+                optional: no
+          {{- include "digito.container.probes" .Values.serving.deployment | indent 10 }}
+          ports:
+            - containerPort: {{ .Values.serving.deployment.port }}
+              protocol: TCP
+          {{- if .Values.serving.deployment.resources }}
+          resources:
+            {{- toYaml .Values.serving.deployment.resources | nindent 12 }}
+          {{- end }}
+

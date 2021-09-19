@@ -69,7 +69,6 @@ class Net():
         """
         return self._model.predict(image_array, verbose=verbose).tolist()
 
-
     @staticmethod
     def _create():
         model = Sequential()

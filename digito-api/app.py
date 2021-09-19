@@ -37,5 +37,10 @@ def recognise():
 
 @app.route('/health')
 def health():
+    return 'OK'
+
+
+@app.route('/readiness')
+def readiness():
     recognition.check()
     return 'OK'

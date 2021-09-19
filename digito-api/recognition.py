@@ -37,7 +37,7 @@ class Recognition:
         return next(iter(classify(response)))
 
     def check(self):
-        pass
+        return self.client.status()
 
 
 def train():
