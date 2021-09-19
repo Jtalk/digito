@@ -23,13 +23,6 @@ spec:
       containers:
         - name: {{ quote .Values.serving.name }}
           image: {{- include "digito.container.image" .Values.serving.deployment.image | quote | indent 1 }}
-          env:
-            - name: PORT
-              value: {{ quote .Values.serving.deployment.port }}
-          envFrom:
-            - configMapRef:
-                name: {{ quote .Values.serving.name }}
-                optional: no
           {{- include "digito.container.probes" .Values.serving.deployment | indent 10 }}
           ports:
             - containerPort: {{ .Values.serving.deployment.port }}
