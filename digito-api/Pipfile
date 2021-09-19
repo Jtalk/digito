@@ -12,6 +12,7 @@ start = "gunicorn --workers=2 --threads=1 --worker-class=gthread --log-file=- --
 [packages]
 gunicorn = ">=20"
 opencv-python = ">=4,<5"
+requests = ">=2.26.0"
 scikit-image = ">=0.16.2"
 scipy = ">=1.5.2,<2"
 termcolor = ">=1.1.0"
