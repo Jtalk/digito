@@ -66,11 +66,11 @@ api:
         failureThreshold: 1
         timeoutSeconds: 1
     resources:
-      # limits:
-      #   memory: 500M
-      # requests:
-      #   cpu: 100m
-      #   memory: 500M
+      limits:
+        memory: 120M
+      requests:
+        cpu: 200m
+        memory: 120M
 
 serving:
   type: serving
@@ -98,8 +98,8 @@ serving:
         failureThreshold: 1
         timeoutSeconds: 1
     resources:
-      # limits:
-      #   memory: 500M
-      # requests:
-      #   cpu: 100m
-      #   memory: 500M
+      limits:
+        memory: 90M
+      requests:
+        cpu: 200m
+        memory: 90M
