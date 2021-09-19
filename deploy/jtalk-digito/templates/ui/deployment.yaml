@@ -31,6 +31,8 @@ spec:
           ports:
             - containerPort: {{ .Values.ui.deployment.port }}
               protocol: TCP
+          {{- if .Values.ui.deployment.resources }}
           resources:
             {{- toYaml .Values.ui.deployment.resources | nindent 12 }}
+          {{- end }}
 
