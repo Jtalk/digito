@@ -8,12 +8,16 @@ COPY Pipfile ./
 COPY Pipfile.lock ./
 RUN pipenv sync
 
-COPY model/ model/
 COPY *.py ./
 
 ENV LOGGER_LEVEL=INFO
 ENV VERBOSE=0
 RUN pip freeze
-# ENV UI_LOCATION=depends on deployment
-# ENV LOGGER_FORMAT=see logconf.py
+
+# from deployment
+ENV UI_LOCATION=
+ENV TF_SERVING_LOCATION=
+
+# see logconf.py
+ENV LOGGER_FORMAT= 
 CMD ["pipenv", "run", "start"]

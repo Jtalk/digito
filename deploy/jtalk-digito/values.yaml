@@ -56,16 +56,53 @@ api:
       topologyKey: kubernetes.io/hostname
     probes:
       startup:
-        periodSeconds: 10
-        failureThreshold: 6
-        timeoutSeconds: 5
+        periodSeconds: 5
+        failureThreshold: 3
+        timeoutSeconds: 3
       liveness:
         path: /health
         failureThreshold: 1
-        timeoutSeconds: 5
+        timeoutSeconds: 3
+      readiness:
+        path: /readiness
+        failureThreshold: 1
+        timeoutSeconds: 1
     resources:
-      limits:
-        memory: 500M
-      requests:
-        cpu: 100m
-        memory: 500M
+      # limits:
+      #   memory: 500M
+      # requests:
+      #   cpu: 100m
+      #   memory: 500M
+
+serving:
+  type: serving
+  name: digito-serving
+  service:
+    port: 80
+  deployment:
+    port: 80
+    image:
+      name: jtalk/digito-serving
+      version: latest
+    replicas: 2
+    rollingUpdate:
+      maxSurge: 50%
+      maxUnavailable: 50%
+    affinity:
+      weight: 100
+      topologyKey: kubernetes.io/hostname
+    probes:
+      startup:
+        periodSeconds: 5
+        failureThreshold: 3
+        timeoutSeconds: 5
+      liveness:
+        path: /v1/models/model
+        failureThreshold: 1
+        timeoutSeconds: 1
+    resources:
+      # limits:
+      #   memory: 500M
+      # requests:
+      #   cpu: 100m
+      #   memory: 500M

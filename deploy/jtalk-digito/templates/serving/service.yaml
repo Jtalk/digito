@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ quote .Values.serving.name }}
+  labels:
+    app: {{ quote .Values.name }}
+    type: {{ quote .Values.serving.type }}
+spec:
+  selector:
+    app: {{ quote .Values.name }}
+    type: {{ quote .Values.serving.type }}
+  {{- include "digito.service.ports" .Values.serving | indent 2 }}

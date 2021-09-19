@@ -1,7 +1,37 @@
 import cv2
 import numpy
+
 from numpy import array, rint, add
 from skimage.filters import threshold_otsu
+from tqdm import tqdm
+
+
+def preprocess(images_array, rows, cols, padding, verbose=False, verbose_max_count=3):
+    return array([preprocess_image(img, rows=rows, cols=cols, padding=padding, index=i, verbose=verbose, verbose_max_count=verbose_max_count) for i, img in enumerate(tqdm(images_array))])
+
+
+def preprocess_image(image, rows, cols, padding, index=None, verbose=False, verbose_max_count=3):
+    image = numpy.divide(image, 255)
+
+    binary = threshold_binarise(image)
+    if verbose and index is not None and index < verbose_max_count:
+        save_as('img-binary-%d.bmp' % index, binary)
+    cropped = crop_background(binary)
+    if verbose and index is not None and index < verbose_max_count:
+        save_as('img-cropped-%d.bmp' % index, cropped)
+    resized = resize_grayscale(
+        cropped, (rows - padding * 2, cols - padding * 2))
+    if verbose and index is not None and index < verbose_max_count:
+        save_as('img-resized-%d.bmp' % index, resized)
+    padded = pad(resized, padding, padding_pixel=1)
+    if verbose and index is not None and index < verbose_max_count:
+        save_as('img-final-%d.bmp' % index, padded)
+    return padded
+
+
+def save_as(name, image):
+    image = numpy.multiply(image, 255)
+    cv2.imwrite(name, image)
 
 
 def from_binary(image_bytes):
@@ -89,6 +119,22 @@ def pad(image_array, num_pixels, padding_pixel=1):
                                 (num_pixels, num_pixels), (0, 0)),
                      mode='constant',
                      constant_values=padding_pixel)
+
+
+def adjust_dimensions(image_array):
+    """
+    Converts the image array to a standard representation for the network
+    :param image_array:
+    :return:
+    """
+    shape_len = len(image_array.shape)
+    if shape_len == 2:
+        return image_array.reshape((1, image_array.shape[0], image_array.shape[1], 1))
+    elif shape_len == 3:
+        return image_array.reshape(((1, image_array.shape[0], image_array.shape[1], image_array.shape[2])))
+    else:
+        raise ValueError('Unsupported image tensor shape %s' %
+                         image_array.shape)
 
 
 class Edges:

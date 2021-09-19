@@ -3,68 +3,61 @@ import os
 
 import cv2
 
-from image import convert_colour, from_binary
-from net import Net, train_mnist
+from client import TensorflowClient
+from config import MNIST_ROWS, MNIST_COLS, PADDING
+from image import convert_colour, from_binary, preprocess, adjust_dimensions
 
 _LOCATION = os.path.dirname(os.path.abspath(__file__))
+_MODEL_PATH = os.path.join(_LOCATION, 'model')
 
-_MODEL_JSON_NAME = os.path.join(_LOCATION, 'model', 'model.json')
-_WEIGHTS_NAME = os.path.join(_LOCATION, 'model', 'weights.h5')
-
-_DLNETWORK_CACHE = None
 _VERBOSE = int(os.environ['VERBOSE'] if 'VERBOSE' in os.environ else 0) > 0
 
 log = logging.getLogger('recognition')
 
 
-def recognise(img):
-    img = from_binary(img)
-    log.debug('Converting to a grayscale image')
-    img = convert_colour(img, transparency_colour=255,
-                         colour=cv2.COLOR_BGRA2GRAY)
-    log.debug('Adjusting dimensions for Keras')
-    img = _adjust_dimensions(img)
-    net = _get_network()
-    log.debug('Recognising the image')
-    return next(iter(net.recognise(img, verbose=_VERBOSE)))
+class Recognition:
 
+    def __init__(self, client: TensorflowClient):
+        self.client = client
 
-def check():
-    _get_network()
+    def recognise(self, img):
+        img = from_binary(img)
+        log.debug('Converting to a grayscale image')
+        img = convert_colour(img, transparency_colour=255,
+                             colour=cv2.COLOR_BGRA2GRAY)
+        log.debug('Adjusting dimensions for Keras')
+        img = adjust_dimensions(img)
+        log.debug('Preprocessing images before feeding them to the network')
+        img = preprocess(img, rows=MNIST_ROWS, cols=MNIST_COLS,
+                         padding=PADDING, verbose=_VERBOSE)
+        log.debug('Image preprocessing complete')
+        verify(img)
+        log.debug('Recognising the image')
+        response = self.client.recognise(img)
+        return next(iter(classify(response)))
 
-
-def preload():
-    log.info('Loading the network')
-    result = Net(_MODEL_JSON_NAME, _WEIGHTS_NAME)
-    log.info('The network was successfully loaded')
-    return result
+    def check(self):
+        return self.client.status()
 
 
 def train():
+    from net import Net, train_mnist
     net = Net()
     net = train_mnist(net)
-    net.save(_MODEL_JSON_NAME, _WEIGHTS_NAME)
+    net.save(_MODEL_PATH)
 
 
-def _get_network():
-    global _DLNETWORK_CACHE
-    log.debug('Getting a network instance')
-    if _DLNETWORK_CACHE is None:
-        _DLNETWORK_CACHE = preload()
-    return _DLNETWORK_CACHE
+def verify(image_array):
+    assert image_array.shape[3] == 1, \
+        'The images were expected to be grayscale, but had %d channels' % image_array.shape[
+            3]
 
 
-def _adjust_dimensions(image_array):
-    """
-    Converts the image array to a standard representation for the network
-    :param image_array:
-    :return:
-    """
-    shape_len = len(image_array.shape)
-    if shape_len == 2:
-        return image_array.reshape((1, image_array.shape[0], image_array.shape[1], 1))
-    elif shape_len == 3:
-        return image_array.reshape(((1, image_array.shape[0], image_array.shape[1], image_array.shape[2])))
-    else:
-        raise ValueError('Unsupported image tensor shape %s' %
-                         image_array.shape)
+def classify(results):
+    digits = []
+    for result in results:
+        digit = result.index(max(result))
+        digits.append(digit)
+    log.info('The digits were recognised as %s, data: %s' %
+             (digits, results))
+    return digits
