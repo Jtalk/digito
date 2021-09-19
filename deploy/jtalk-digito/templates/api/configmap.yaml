@@ -12,3 +12,4 @@ data:
   {{- end }}
   LOGGER_LEVEL: INFO
   UI_LOCATION: {{ join "," $origins.value | quote }}
+  TENSORFLOW_LOCATION: {{ printf "http://%s" .Values.serving.name | quote }}
