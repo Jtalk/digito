@@ -45,9 +45,9 @@ api:
     port: 80
     image:
       name: jtalk/digito-api
-    replicas: 1
+    replicas: 2
     rollingUpdate:
-      maxSurge: 100%
+      maxSurge: 50%
       maxUnavailable: 50%
     affinity:
       weight: 100
