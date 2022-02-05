@@ -30,7 +30,7 @@ ui:
       limits:
         memory: 80M
       requests:
-        cpu: 50m
+        cpu: 10m
         memory: 80M
 
 api:
@@ -69,7 +69,7 @@ api:
       limits:
         memory: 120M
       requests:
-        cpu: 200m
+        cpu: 10m
         memory: 120M
 
 serving:
@@ -101,5 +101,5 @@ serving:
       limits:
         memory: 90M
       requests:
-        cpu: 200m
+        cpu: 20m
         memory: 90M
