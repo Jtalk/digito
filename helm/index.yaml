@@ -3,7 +3,7 @@ entries:
   jtalk-digito:
   - apiVersion: v2
     appVersion: f25490202c2dca4b1b9a7adc6ee27781a957d8a5
-    created: "2022-02-12T16:49:02.681215645Z"
+    created: "2022-02-20T13:13:06.146613847Z"
     description: A Helm chart for Digito Recogniser
     digest: 7d9666006dfb6189811004e059aa0952199cbd3b3dd938a3ad3a312edadcd5b9
     home: https://digito.jtalk.me
@@ -19,7 +19,7 @@ entries:
     version: 1.0.0-f25490202c2dca4b1b9a7adc6ee27781a957d8a5
   - apiVersion: v2
     appVersion: e231568e142b38d4d3bd670ae61150d4f5c66085
-    created: "2022-02-12T16:49:02.67985735Z"
+    created: "2022-02-20T13:13:06.145404329Z"
     description: A Helm chart for Digito Recogniser
     digest: 98d58e21ab8d614eeb32351c9312261cd707e28cdfbd6fa45c22779e1d64692c
     home: https://digito.jtalk.me
@@ -35,7 +35,7 @@ entries:
     version: 1.0.0-e231568e142b38d4d3bd670ae61150d4f5c66085
   - apiVersion: v2
     appVersion: e12b8f41285af73a773d69a7c8335d41f59a240e
-    created: "2022-02-12T16:49:02.673294172Z"
+    created: "2022-02-20T13:13:06.144240312Z"
     description: A Helm chart for Digito Recogniser
     digest: 4840d03d853e886aa3f4d474bd638187a6e4ee7604beeda18a00758f883a37f5
     home: https://digito.jtalk.me
@@ -51,7 +51,7 @@ entries:
     version: 1.0.0-e12b8f41285af73a773d69a7c8335d41f59a240e
   - apiVersion: v2
     appVersion: df50af2d12e393c172786218e964269b1952211e
-    created: "2022-02-12T16:49:02.671162479Z"
+    created: "2022-02-20T13:13:06.142977793Z"
     description: A Helm chart for Digito Recogniser
     digest: 1795b80f9737439ec200790d57b53e44fe4a14068b0b9f9152779bfcf622221b
     home: https://digito.jtalk.me
@@ -67,7 +67,7 @@ entries:
     version: 1.0.0-df50af2d12e393c172786218e964269b1952211e
   - apiVersion: v2
     appVersion: dbc8e05ccc50e851d08d1ce9cee50ca03e9bdf19
-    created: "2022-02-12T16:49:02.669892384Z"
+    created: "2022-02-20T13:13:06.141841076Z"
     description: A Helm chart for Digito Recogniser
     digest: d07f947ee9b733787ace8e8f58853aae85089e1df0430adb0dde03b0ef5966e1
     home: https://digito.jtalk.me
@@ -83,7 +83,7 @@ entries:
     version: 1.0.0-dbc8e05ccc50e851d08d1ce9cee50ca03e9bdf19
   - apiVersion: v2
     appVersion: cdac59f948b113913230bb50c7c76b592fb9617c
-    created: "2022-02-12T16:49:02.668480588Z"
+    created: "2022-02-20T13:13:06.14079766Z"
     description: A Helm chart for Digito Recogniser
     digest: 1e584b9dae2eeed4ffa17e68e311a605fa3427b9fc5b80fb9267d72ae01716cb
     home: https://digito.jtalk.me
@@ -99,7 +99,7 @@ entries:
     version: 1.0.0-cdac59f948b113913230bb50c7c76b592fb9617c
   - apiVersion: v2
     appVersion: b4e6b749cf34b62469cfd4b7117e4414b14fde9b
-    created: "2022-02-12T16:49:02.666956794Z"
+    created: "2022-02-20T13:13:06.139567142Z"
     description: A Helm chart for Digito Recogniser
     digest: b42bcd4fcf269c57447b15b50c5370fe3fcae818d0f93da4cc2ea08a862a6966
     home: https://digito.jtalk.me
@@ -115,7 +115,7 @@ entries:
     version: 1.0.0-b4e6b749cf34b62469cfd4b7117e4414b14fde9b
   - apiVersion: v2
     appVersion: a8009f007663e0143af08860ffa36b390dc06bea
-    created: "2022-02-12T16:49:02.665452499Z"
+    created: "2022-02-20T13:13:06.138395125Z"
     description: A Helm chart for Digito Recogniser
     digest: 7a952c1300d31d152b1d6cea27416046460f680db472824ff7468d4457fcc1df
     home: https://digito.jtalk.me
@@ -130,8 +130,24 @@ entries:
     - https://Jtalk.github.io/digito/helm/jtalk-digito-1.0.0-a8009f007663e0143af08860ffa36b390dc06bea.tgz
     version: 1.0.0-a8009f007663e0143af08860ffa36b390dc06bea
   - apiVersion: v2
+    appVersion: a40aa8c4341152b51eb244996eb6faa4c107860c
+    created: "2022-02-20T13:13:06.137307909Z"
+    description: A Helm chart for Digito Recogniser
+    digest: adf81b6e75ca4901ae312b188dd4e3414ef639b43235f4f50404f874a8d8feee
+    home: https://digito.jtalk.me
+    maintainers:
+    - email: me+digito-helm@jtalk.me
+      name: Roman Nazarenko
+    name: jtalk-digito
+    sources:
+    - https://github.com/Jtalk/digito
+    type: application
+    urls:
+    - https://Jtalk.github.io/digito/helm/jtalk-digito-1.0.0-a40aa8c4341152b51eb244996eb6faa4c107860c.tgz
+    version: 1.0.0-a40aa8c4341152b51eb244996eb6faa4c107860c
+  - apiVersion: v2
     appVersion: 91127217039da81da5eb707816ed535be270a462
-    created: "2022-02-12T16:49:02.664120003Z"
+    created: "2022-02-20T13:13:06.135292779Z"
     description: A Helm chart for Digito Recogniser
     digest: 0fa9c770bb5d6acfa74661d7d02512b9ad77371cc76051f71d4dc0f617a61fc3
     home: https://digito.jtalk.me
@@ -147,7 +163,7 @@ entries:
     version: 1.0.0-91127217039da81da5eb707816ed535be270a462
   - apiVersion: v2
     appVersion: 82a32a74d50c89c13379b12519c0c98a3c625f34
-    created: "2022-02-12T16:49:02.662774108Z"
+    created: "2022-02-20T13:13:06.133637054Z"
     description: A Helm chart for Digito Recogniser
     digest: edd935dd247606449fc056b678b6910292b79da872304c434b5f2732c94afc9d
     home: https://digito.jtalk.me
@@ -163,7 +179,7 @@ entries:
     version: 1.0.0-82a32a74d50c89c13379b12519c0c98a3c625f34
   - apiVersion: v2
     appVersion: 70269a8024f17fa41ac0a7bbfde391b97538d8f9
-    created: "2022-02-12T16:49:02.661255113Z"
+    created: "2022-02-20T13:13:06.132626639Z"
     description: A Helm chart for Digito Recogniser
     digest: 57b251819729f7c32551d759415eae94e2e12b99ff97609dc15a8cd18139a6e2
     home: https://digito.jtalk.me
@@ -179,7 +195,7 @@ entries:
     version: 1.0.0-70269a8024f17fa41ac0a7bbfde391b97538d8f9
   - apiVersion: v2
     appVersion: 4e4684a273d93bd989ef23fa1960f9cafe35f5af
-    created: "2022-02-12T16:49:02.659792218Z"
+    created: "2022-02-20T13:13:06.131563923Z"
     description: A Helm chart for Digito Recogniser
     digest: a27f7b955dff80e8902a639ac808fc47dc8db5d742e9792e8f9488b3280f5c72
     home: https://digito.jtalk.me
@@ -195,7 +211,7 @@ entries:
     version: 1.0.0-4e4684a273d93bd989ef23fa1960f9cafe35f5af
   - apiVersion: v2
     appVersion: 400cf86c856ac185e8579881d7e9cec33e09a24b
-    created: "2022-02-12T16:49:02.658389823Z"
+    created: "2022-02-20T13:13:06.130525508Z"
     description: A Helm chart for Digito Recogniser
     digest: e5018d4d61122ef1c08765286996b908aaa9e5907e1acfa9a7be2017907ff94a
     home: https://digito.jtalk.me
@@ -211,7 +227,7 @@ entries:
     version: 1.0.0-400cf86c856ac185e8579881d7e9cec33e09a24b
   - apiVersion: v2
     appVersion: 38863ea264d326d54966f2e55ce0c86df2fdc549
-    created: "2022-02-12T16:49:02.656562429Z"
+    created: "2022-02-20T13:13:06.129594394Z"
     description: A Helm chart for Digito Recogniser
     digest: e5cebbd2e2efea8de5ed4dc97e0df96f5e2b19116d72a2a754d538b700d9c4f6
     home: https://digito.jtalk.me
@@ -227,7 +243,7 @@ entries:
     version: 1.0.0-38863ea264d326d54966f2e55ce0c86df2fdc549
   - apiVersion: v2
     appVersion: 34bcc2538279c9c282715b3e43e1f0aefb0ebbc9
-    created: "2022-02-12T16:49:02.653750738Z"
+    created: "2022-02-20T13:13:06.128473477Z"
     description: A Helm chart for Digito Recogniser
     digest: c00034a6f671f8e8cfd7d73dba109d239f4b3c309445fcf99573a4d44183b52b
     home: https://digito.jtalk.me
@@ -243,7 +259,7 @@ entries:
     version: 1.0.0-34bcc2538279c9c282715b3e43e1f0aefb0ebbc9
   - apiVersion: v2
     appVersion: 21ebc80cb5094d3b093d1bb8c5ac1c6703fc1e10
-    created: "2022-02-12T16:49:02.652425343Z"
+    created: "2022-02-20T13:13:06.12734496Z"
     description: A Helm chart for Digito Recogniser
     digest: 3020d77f7edcceabcc32706ec8fd01fb1179da39dd722f7bbe629529ab6a6417
     home: https://digito.jtalk.me
@@ -259,7 +275,7 @@ entries:
     version: 1.0.0-21ebc80cb5094d3b093d1bb8c5ac1c6703fc1e10
   - apiVersion: v2
     appVersion: 0c271211b2d6f28f7b8888bdc90fa3a06e8cd469
-    created: "2022-02-12T16:49:02.651264947Z"
+    created: "2022-02-20T13:13:06.126318645Z"
     description: A Helm chart for Digito Recogniser
     digest: 06703aa447af7e171df07846fe35d3918efdf097d6c1a5d63fcb1a7130dc1ab2
     home: https://digito.jtalk.me
@@ -275,7 +291,7 @@ entries:
     version: 1.0.0-0c271211b2d6f28f7b8888bdc90fa3a06e8cd469
   - apiVersion: v2
     appVersion: 06dcc92ca688c57f4918441eade9e51382cc5d3e
-    created: "2022-02-12T16:49:02.650024051Z"
+    created: "2022-02-20T13:13:06.125249229Z"
     description: A Helm chart for Digito Recogniser
     digest: ab27f0daa27f359082047fec5de93e1e4f4e0d1e45af550b0decb97b4829e82d
     home: https://digito.jtalk.me
@@ -289,4 +305,4 @@ entries:
     urls:
     - https://Jtalk.github.io/digito/helm/jtalk-digito-1.0.0-06dcc92ca688c57f4918441eade9e51382cc5d3e.tgz
     version: 1.0.0-06dcc92ca688c57f4918441eade9e51382cc5d3e
-generated: "2022-02-12T16:49:02.648479056Z"
+generated: "2022-02-20T13:13:06.123125997Z"
